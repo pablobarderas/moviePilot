@@ -22,7 +22,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import com.app.model.moviePilot.season.Episode;
+import com.app.moviePilot.model.season.Episode;
 import com.app.moviePilot.model.season.Season;
 /**
  * 
