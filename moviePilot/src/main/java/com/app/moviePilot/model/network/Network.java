@@ -17,11 +17,11 @@ import javax.persistence.Table;
 @Table(name = "NETWORKS")
 public class Network {
 	
-	private int id;
+	private Long id;
 	private String name;
 	private String logoPath;
 	
-	public Network(int id, String name, String logoPath) {
+	public Network(Long id, String name, String logoPath) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,11 +31,11 @@ public class Network {
 	public Network() {
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -54,7 +54,5 @@ public class Network {
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
 	}
-	
-	
 
 }//end class

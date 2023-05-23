@@ -250,7 +250,7 @@ public class ShowParser extends DataParser {
 	        for (JsonElement element : networkArray) {
 	            JsonObject networkObject = element.getAsJsonObject();
 	            String name = getStringValue(networkObject, "name");
-	            int id = getIntValue(networkObject, "id");
+	            Long id = getLongValue(networkObject, "id");
 	            String logoPath = getStringValue(networkObject, "logo_path");
 	            if (name != null && id != 0 && logoPath != null) {
 	                Network network = new Network(id, name, logoPath);

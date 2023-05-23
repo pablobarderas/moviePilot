@@ -4,26 +4,31 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.moviePilot.services.ShowService;
+import com.app.moviePilot.controller.parser.ShowParser;
 
 @RestController
 @RequestMapping("/shows")
 public class ShowController {
 
-    private final ShowService showService;
+    private final ShowParser showParser;
 
     @Autowired
-    public ShowController(ShowService showService) {
-        this.showService = showService;
+    public ShowController(ShowParser showService) {
+        this.showParser = showService;
     }
 
     @GetMapping
     public List<Show> getAllShows() {
-        return showService.getAllShows();
+        return showParser.getAllShows(null);
     }
 
-    // Other methods in the controller class
+    @GetMapping("/popular/{page}")
+    public List<Show> getPopularShows(@PathVariable Integer page) {
+        return showParser.getShowsFromPage(page);
+    }
+
 }//end class
