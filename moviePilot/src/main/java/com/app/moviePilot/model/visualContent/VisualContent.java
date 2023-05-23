@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
@@ -25,8 +27,7 @@ import com.app.moviePilot.model.enums.Genres;
  * @author Pablo Barderas, Arismendy Castillo
  *
  */
-@MappedSuperclass
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Entity
 public abstract class VisualContent {
 	
 	private Long idApi;
@@ -57,8 +58,9 @@ public abstract class VisualContent {
 	private int voteCount;
 	@Transient
 	private String status;
-	@Transient
-	private List<Comment> comments;
+	@OneToMany
+    private List<Comment> comments;
+
 	
 	
 	public VisualContent() {
