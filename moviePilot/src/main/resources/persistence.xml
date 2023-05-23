@@ -16,6 +16,7 @@
             <property name="javax.persistence.jdbc.url" value="6.tcp.eu.ngrok.io:18885"/>
             <property name="javax.persistence.jdbc.username" value="Nottingham_Prisa_admin"/>
             <property name="javax.persistence.jdbc.password" value="Marzo2023"/>
+            <property name="javax.persistence.jdbc.database" value="Nottingham_Prisa"/>
         </properties>
     </persistence-unit>
 </persistence>
