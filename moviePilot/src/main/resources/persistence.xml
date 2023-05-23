@@ -13,6 +13,7 @@
  		<class></class> 
         <properties>          
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <!-- url quizas necesita tcp:// al principio-->
             <property name="javax.persistence.jdbc.url" value="6.tcp.eu.ngrok.io:18885"/>
             <property name="javax.persistence.jdbc.username" value="Nottingham_Prisa_admin"/>
             <property name="javax.persistence.jdbc.password" value="Marzo2023"/>
