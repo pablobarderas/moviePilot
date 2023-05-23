@@ -1,4 +1,4 @@
-package com.app.moviePilot.controller.register;
+package com.app.moviePilot.security;
 
 import java.io.IOException;
 import java.io.InputStream;
