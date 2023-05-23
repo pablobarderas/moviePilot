@@ -16,12 +16,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "NETWORKS")
 public class Network {
-	
-	private Long id;
+	@Id
+	private int id;
 	private String name;
 	private String logoPath;
 	
-	public Network(Long id, String name, String logoPath) {
+	public Network(int id, String name, String logoPath) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,11 +31,11 @@ public class Network {
 	public Network() {
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
