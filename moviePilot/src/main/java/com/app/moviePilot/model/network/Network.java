@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "NETWORKS")
 public class Network {
-	
+	@Id
 	private int id;
 	private String name;
 	private String logoPath;
