@@ -14,10 +14,10 @@
         <properties>          
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!-- url quizas necesita tcp:// al principio-->
-            <property name="javax.persistence.jdbc.url" value="6.tcp.eu.ngrok.io:18885"/>
-            <property name="javax.persistence.jdbc.username" value="Nottingham_Prisa_admin"/>
-            <property name="javax.persistence.jdbc.password" value="Marzo2023"/>
-            <property name="javax.persistence.jdbc.database" value="Nottingham_Prisa"/>
+            <property name="javax.persistence.jdbc.url" value="127.0.0.1"/>
+            <property name="javax.persistence.jdbc.username" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.database" value=""/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -1,4 +1,4 @@
-package com.app.moviePilot.controller.register;
+package com.app.moviePilot.security;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import java.util.Properties;
  *
  */
 public class KeyStorer {
-	private static final String FILE_NAME = "project.properties";
+	private static final String FILE_NAME = "keys.properties";
 	private static final String FILE_PATH = "src/main/resources";
 	 public static boolean saveEncryptedSecretToProperties(final String encryptedSecret, final String index) {
 		 	if(encryptedSecret==null || encryptedSecret.trim().length()==0 || index==null || index.trim().length()==0) return false;
