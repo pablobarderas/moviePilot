@@ -1,4 +1,4 @@
-package com.app.moviePilot.model.show;
+package com.app.moviePilot.services;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.moviePilot.controller.parser.ShowParser;
+import com.app.moviePilot.model.show.Show;
 import com.app.moviePilot.repository.ShowRepository;
 
 @Service
