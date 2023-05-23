@@ -11,7 +11,7 @@ import com.app.moviePilot.model.film.Film;
 @RestController
 public class FilmController {
 
-	@GetMapping(value = "/popularMovies/{page}")
+	@GetMapping(value = "/popularMovies/page/{page}")
 	public List<Film> getPopularMovies(@PathVariable int page) {
 		FilmParser filmParser = new FilmParser();
 		String URL = "http://api.themoviedb.org/3/movie/popular";
