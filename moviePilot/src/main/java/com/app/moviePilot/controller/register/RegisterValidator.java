@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.moviePilot.model.register.RegisterData;
+import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
 import com.app.moviePilot.repository.ActiveUserRepository;
 import com.app.moviePilot.security.UserSecurity;
@@ -39,7 +40,7 @@ public class RegisterValidator {
 	}
 	 @DeleteMapping("/{username}")
 	    public ResponseEntity<User> deleteUser(@PathVariable String username) {
-			User userToDelete = userRepo.findByUsername(username);
+			ActiveUser userToDelete = userRepo.findByUsername(username);
 			if (userToDelete != null) {
 				userRepo.delete(userToDelete);
 			} else {
