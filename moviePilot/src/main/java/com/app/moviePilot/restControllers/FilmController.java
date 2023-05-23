@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.model.film.Film;
 
+/**
+ * 
+ * @author Pablo Barderas
+ *
+ */
 @RestController
 public class FilmController {
 
