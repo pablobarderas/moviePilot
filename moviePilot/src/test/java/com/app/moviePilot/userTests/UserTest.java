@@ -10,6 +10,7 @@ import java.util.Set;
 import com.app.moviePilot.model.visualContent.VisualContent;
 import com.app.moviePilot.model.film.Film;
 import com.app.moviePilot.model.enums.Genres;
+import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
 
 import org.junit.jupiter.api.Test;
@@ -22,21 +23,21 @@ import org.junit.jupiter.api.Test;
 class UserTest {
 	@Test
 	void createUserTest() {
-		User genericUser = new User("TestUserName","emailTest@gmail.com","passwordTest","C:/fakepath",Set.of(new Genres("Action",1)),null, null,LocalDateTime.now());
+		User genericUser = new ActiveUser("TestUserName","emailTest@gmail.com","passwordTest","C:/fakepath",Set.of(new Genres("Action",1)),null, null,LocalDateTime.now());
 		assertNotNull(genericUser);
-		Set<User> friends = new HashSet<>();
-		friends.add(genericUser);
-		User userWithFriends = new User("TestUserNameWFriends","emailTestFriends@gmail.com","passwordTest2","C:/fakepath",null,null, friends,LocalDateTime.now());
+		Set<ActiveUser> friends = new HashSet<>();
+		friends.add((ActiveUser)genericUser);
+		User userWithFriends = new ActiveUser("TestUserNameWFriends","emailTestFriends@gmail.com","passwordTest2","C:/fakepath",null,null, friends,LocalDateTime.now());
 		assertNotNull(userWithFriends);
 		VisualContent f = new Film();
-		User userWithList =new User("TestUserNameWFriends","emailTestFriends@gmail.com","passwordTest2","C:/fakepath",null,Map.of(1,Set.of(f)), friends,LocalDateTime.now());
+		User userWithList =new ActiveUser("TestUserNameWFriends","emailTestFriends@gmail.com","passwordTest2","C:/fakepath",null,Set.of(f), friends,LocalDateTime.now());
 		assertNotNull(userWithList);
 	}
 	@Test
 	void createEmptyUser() {
-		User emptyUser = new User();
+		User emptyUser = new ActiveUser();
 		assertNotNull(emptyUser);
-		emptyUser.setId(4);
+		emptyUser.setId(4L);
 		assertEquals(4, emptyUser.getId());
 		LocalDateTime createdAt = LocalDateTime.now();		
 		emptyUser.setCreatedAt(createdAt);

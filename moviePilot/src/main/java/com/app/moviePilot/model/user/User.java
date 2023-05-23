@@ -1,6 +1,7 @@
 package com.app.moviePilot.model.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -18,10 +19,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.JoinColumn;
 
+import com.app.moviePilot.model.comment.Comment;
 import com.app.moviePilot.model.enums.Genres;
 import com.app.moviePilot.model.visualContent.VisualContent;
 /**
@@ -30,15 +34,13 @@ import com.app.moviePilot.model.visualContent.VisualContent;
  *
  */
 @Entity
-@Table(name = "ACTIVE_USERS")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class User {
+public abstract class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private long id;
-	@Column(nullable = false, name="user_name")
-	private String userName;
+	private Long id;
+	@Column(nullable = false, name="user_name", unique=true)
+	private String username;
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
@@ -53,24 +55,34 @@ public class User {
 	private Set<Genres> favoriteGenres;
 	@ElementCollection
 	@MapKeyColumn(name="list_id")
-	@Column(name="user_lists")
+	@Column(name="value")
 	@CollectionTable(name="USER_LISTS", joinColumns=@JoinColumn(name="user_id"))
-	private Map<Integer,Set<VisualContent>> userVisualContent;
-	@JoinTable(name = "user_friends",
-		    joinColumns = @JoinColumn(name = "user_id"),
-		    inverseJoinColumns = @JoinColumn(name = "friend_id"))
-	@ManyToMany(mappedBy = "userFriends", fetch = FetchType.LAZY)
-	private Set<User> userFriends;
+	private Set<VisualContent> userVisualContent;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	    name = "user_friends",
+	    joinColumns = @JoinColumn(name = "user_id"),
+	    inverseJoinColumns = @JoinColumn(name = "friend_id")
+	)
+	private Set<ActiveUser> userFriends;
 	@Column(nullable = false, name="created_at")
 	private LocalDateTime createdAt;
+	@OneToMany
+    private List<Comment> comments;
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 	public User() {
 		
 	}
 	public User(String userName, String email, String password, String profilePicture,
-			Set<Genres> favoriteGenres, Map<Integer, Set<VisualContent>> userVisualContent, Set<User> userFriends,
+			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
 			LocalDateTime createdAt) {
 		super();
-		this.userName = userName;
+		this.username = userName;
 		this.email = email;
 		this.password = password;
 		this.profilePicture = profilePicture;
@@ -79,17 +91,17 @@ public class User {
 		this.userFriends = userFriends;
 		this.createdAt = createdAt;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 	public String getEmail() {
 		return email;
@@ -115,16 +127,16 @@ public class User {
 	public void setFavoriteGenres(Set<Genres> favoriteGenres) {
 		this.favoriteGenres = favoriteGenres;
 	}
-	public Map<Integer, Set<VisualContent>> getUserVisualContent() {
+	public Set<VisualContent> getUserVisualContent() {
 		return userVisualContent;
 	}
-	public void setUserVisualContent(Map<Integer, Set<VisualContent>> userVisualContent) {
+	public void setUserVisualContent(Set<VisualContent> userVisualContent) {
 		this.userVisualContent = userVisualContent;
 	}
-	public Set<User> getUserFriends() {
+	public Set<ActiveUser> getUserFriends() {
 		return userFriends;
 	}
-	public void setUserFriends(Set<User> userFriends) {
+	public void setUserFriends(Set<ActiveUser> userFriends) {
 		this.userFriends = userFriends;
 	}
 	public LocalDateTime getCreatedAt() {
@@ -135,7 +147,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
+		return "User [id=" + id + ", userName=" + username + ", email=" + email + ", password=" + password
 				+ ", profilePicture=" + profilePicture + ", favoriteGenres=" + favoriteGenres + ", userVisualContent="
 				+ userVisualContent + ", userFriends=" + userFriends + ", createdAt=" + createdAt + "]";
 	}
@@ -151,7 +163,7 @@ public class User {
 		return Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
 				&& Objects.equals(favoriteGenres, other.favoriteGenres) && id == other.id
 				&& Objects.equals(password, other.password) && Objects.equals(profilePicture, other.profilePicture)
-				&& Objects.equals(userFriends, other.userFriends) && Objects.equals(userName, other.userName)
+				&& Objects.equals(userFriends, other.userFriends) && Objects.equals(username, other.username)
 				&& Objects.equals(userVisualContent, other.userVisualContent);
 	}
 }

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 import com.google.gson.JsonElement;
 
 import com.app.moviePilot.model.register.RegisterData;
+import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
-import com.app.moviePilot.repository.UserRepository;
+import com.app.moviePilot.repository.ActiveUserRepository;
 /**
  * 
  * @author Marino Burillo
@@ -20,12 +21,12 @@ import com.app.moviePilot.repository.UserRepository;
 @Component
 public class SaveRegisteredUser {
 	@Autowired
-	private UserRepository userService;
+	private ActiveUserRepository userService;
 	public SaveRegisteredUser() {
 
 	}
 	public User registerDataToUser(RegisterData userToSave) {
-		User user = new User();
+		ActiveUser user = new ActiveUser();
 		user.setEmail(userToSave.getEmail());
 		user.setUserName(userToSave.getUsername());
 		user.setPassword(userToSave.getPassword());
