@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MoviePilotApplicationTests {
 
 	@Test
-	@Disabled
 	void contextLoads() {
 		assertNotNull(MoviePilotApplication.class);
 	}

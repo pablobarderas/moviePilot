@@ -33,11 +33,10 @@ public class UserController {
 	UserSecurity userSec;
 	@Autowired
 	ActiveUserRepository userRepo;
-	@Autowired
-	RegisterValidator validator;
+	
 	@PostMapping(value = "/user/register")
 	public ResponseEntity<User> getRegisterData(final @RequestBody UserRegisterDTO userToRegister) {
-		UserRegisterDTO validatedFields = validator.checkRegex(userToRegister);
+		UserRegisterDTO validatedFields = RegisterValidator.checkRegex(userToRegister);
 		if (dataToUser.getUser(userToRegister.getUsername()) != null 
 			||	deletedUserSer.getDeletedUser(userToRegister.getUsername())!=null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -73,7 +72,7 @@ public class UserController {
 
 	@PostMapping("user/update")
 	public ResponseEntity<User> getUserToUpdate(final @RequestBody UserUpdateDTO userToUpdate) {
-		UserRegisterDTO validatedFields = validator.checkRegex(userToUpdate);
+		UserRegisterDTO validatedFields = RegisterValidator.checkRegex(userToUpdate);
 		if (userRepo.findByUsername(userToUpdate.getUsername()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}			

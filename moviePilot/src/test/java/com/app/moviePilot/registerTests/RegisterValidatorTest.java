@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.app.moviePilot.controller.register.RegisterValidator;
 import com.app.moviePilot.controller.register.UserController;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 
@@ -16,54 +17,42 @@ import com.app.moviePilot.model.register.UserRegisterDTO;
  *
  */
 class RegisterValidatorTest {
-	UserController vr;
-	final String errorMessage = "{\"error\":\"Incorrect registration data\"}";
-	@BeforeEach
-	void setUp(){
-		vr = new UserController();
-	}
-	@Test
-	void createValidatorTest() {
-		assertNotNull(vr);
-	}
+	
 
 	@Test
-	void validValuesTest() {		
-		String username = "thisValidTestUser";
-		String password = "hasToBeAtLeast8CharsLong";
-		String email = "valid.email@gmail.co";
-		assertNotNull(vr.getRegisterData(new UserRegisterDTO(username,password, email)));
-		email = "valid.email@gmail.co.uk";
-		assertNotNull(vr.getRegisterData(new UserRegisterDTO(username,password, email)));
+	void validValuesTest() {
+		UserRegisterDTO registerData = new UserRegisterDTO("validUsername", "atLeast8Chars", "validEmail@gmail.co");
+		assertNotNull(RegisterValidator.checkRegex(registerData));
+		registerData.setEmail("another.valid@gmail.co.uk");
+		assertNotNull(RegisterValidator.checkRegex(registerData));
 	}
 	@Test
-	void invalidUsernameTest() {		
-		String username = "a";
-		String password = "hasToBeAtLeast8CharsLong";
-		String email = "valid.email@gmail.co";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
+	void invalidUsernameTest() {
+		UserRegisterDTO registerData = new UserRegisterDTO("short", "atLeast8Chars", "validEmail@gmail.co");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setUsername("	 ");
+		assertNull(RegisterValidator.checkRegex(registerData));
 	}
 	@Test
 	void invalidPasswordTest() {
-		String username = "testUser";
-		String password = "short";
-		String email = "valid.email@gmail.co";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
-		password = "notShortNoNumbers";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
+		UserRegisterDTO registerData = new UserRegisterDTO("validUsername", "short1", "validEmail@gmail.co");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setPassword("	 ");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setPassword("longButNoNumbers");
+		assertNull(RegisterValidator.checkRegex(registerData));
 	}
 	@Test
 	void invalidEmailTest() {
-		String username = "testUser";
-		String password = "short";
-		String email = "invalid.email@gmail";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
-		email = "@gmail.co";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
-		email = "a@gmail.c.uk";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
-		email = "a@gmail.co.k";
-		assertEquals(errorMessage,vr.getRegisterData(new UserRegisterDTO(username,password, email)));
+		UserRegisterDTO registerData = new UserRegisterDTO("validUsername", "atLeast8Chars", "@gmail.co");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setEmail("	 ");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setEmail("a@gmail.c");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setEmail("a@gmail.co.a");
+		assertNull(RegisterValidator.checkRegex(registerData));
+		registerData.setEmail("a@.com");
+		assertNull(RegisterValidator.checkRegex(registerData));
 	}
-
 }

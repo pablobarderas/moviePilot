@@ -9,7 +9,11 @@ import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.DeletedUser;
 import com.app.moviePilot.repository.ActiveUserRepository;
 import com.app.moviePilot.repository.DeletedUserRepository;
-
+/**
+ * 
+ * @author Marino Burillo
+ *
+ */
 @Service
 public class DeletedUserService {
 	@Autowired

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.app.moviePilot.controller.register.DeletedUserService;
-import com.app.moviePilot.controller.register.UserService;
 import com.app.moviePilot.model.user.ActiveUser;
 /**
  * 
