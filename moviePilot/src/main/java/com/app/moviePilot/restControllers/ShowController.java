@@ -1,4 +1,4 @@
-package com.app.moviePilot.model.show;
+package com.app.moviePilot.restControllers;
 
 import java.util.List;
 
@@ -8,7 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.moviePilot.controller.parser.ShowParser;
+import com.app.moviePilot.model.show.Show;
 
+/**
+ * Class that manages the different endpoints
+ * to retrieve information from shows.
+ * @author Arismendy Castillo
+ */
 @RestController
 @RequestMapping("/shows")
 public class ShowController {
@@ -19,14 +25,14 @@ public class ShowController {
         this.showParser = showService;
     }
 
-    @GetMapping
-    public List<Show> getAllShows() {
-        return showParser.getAllShows(null);
-    }
+    @GetMapping("/{showId}")
+    public Show getShow(@PathVariable Integer showId) {
+        return showParser.fetchShow(showParser.getJsonShow(showId));
+    }//end method
 
     @GetMapping("/popular/{page}")
     public List<Show> getPopularShows(@PathVariable Integer page) {
         return showParser.getShowsFromPage(page);
-    }
+    }//end method
 
 }//end class
