@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.app.moviePilot.controller.register.UserService;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
 import com.app.moviePilot.model.user.ActiveUser;
+import com.app.moviePilot.services.UserService;
 /**
  * 
  * @author Marino Burillo

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.app.moviePilot.controller.register.RegisterValidator;
-import com.app.moviePilot.controller.register.UserController;
 import com.app.moviePilot.model.register.UserRegisterDTO;
+import com.app.moviePilot.restControllers.UserController;
 
 /**
  * 

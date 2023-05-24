@@ -1,4 +1,4 @@
-package com.app.moviePilot.controller.register;
+package com.app.moviePilot.services;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.app.moviePilot.controller.register;
+package com.app.moviePilot.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.moviePilot.controller.register.RegisterValidator;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
 import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
 import com.app.moviePilot.repository.ActiveUserRepository;
 import com.app.moviePilot.security.UserSecurity;
+import com.app.moviePilot.services.DeletedUserService;
+import com.app.moviePilot.services.UserService;
 
 /**
  * 
