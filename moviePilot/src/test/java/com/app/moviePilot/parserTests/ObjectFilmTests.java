@@ -138,10 +138,10 @@ class ObjectFilmTests {
 	
 	@Test
 	void testListObjectByPage() {
-		int page = 2;
-		List<Film> listFilm = filmParser.getFilmsFromPage("https://api.themoviedb.org/3/discover/movie?&api_key=6cacd119a397de0ec8845d760efdb7ab",page);
+		int page = 1;
+		List<Film> listFilm = filmParser.getFilmsFromPage("discover/movie",page);
 		assertNotNull(listFilm);
-		assertEquals(1111140, listFilm.get(0).getIdApi());
+		assertEquals(502356, listFilm.get(0).getIdApi());
 	}
 	
 	
