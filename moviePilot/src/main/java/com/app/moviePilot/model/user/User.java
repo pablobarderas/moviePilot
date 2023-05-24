@@ -34,31 +34,33 @@ import com.app.moviePilot.model.visualContent.VisualContent;
  *
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private Long id;
-	@Column(nullable = false, name="user_name", unique=true)
+	@Column(nullable = false, name="username", unique=true)
 	private String username;
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String email;
 	@Column(nullable = false)
 	private String password;
 	@Column(name="profile_picture")
 	private String profilePicture;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 	  name = "user_genres", 
 	  joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genres> favoriteGenres;
-	@ElementCollection
-	@MapKeyColumn(name="list_id")
-	@Column(name="value")
-	@CollectionTable(name="USER_LISTS", joinColumns=@JoinColumn(name="user_id"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	  name = "user_lits", 
+	  joinColumns = @JoinColumn(name = "user_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "content_id"))
 	private Set<VisualContent> userVisualContent;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 	    name = "user_friends",
 	    joinColumns = @JoinColumn(name = "user_id"),
@@ -67,7 +69,7 @@ public abstract class User {
 	private Set<ActiveUser> userFriends;
 	@Column(nullable = false, name="created_at")
 	private LocalDateTime createdAt;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
 	public List<Comment> getComments() {
 		return comments;

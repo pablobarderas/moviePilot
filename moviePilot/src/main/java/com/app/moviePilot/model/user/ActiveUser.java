@@ -14,7 +14,6 @@ import com.app.moviePilot.model.visualContent.VisualContent;
 
 @Entity
 @Table(name="ACTIVE_USERS")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ActiveUser extends User {
 	public ActiveUser(String userName, String email, String password, String profilePicture,
 			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,

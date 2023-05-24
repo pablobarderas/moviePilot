@@ -14,7 +14,6 @@ import com.app.moviePilot.model.enums.Genres;
 import com.app.moviePilot.model.visualContent.VisualContent;
 @Entity
 @Table(name="DELETED_USERS")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class DeletedUser extends User {
 	@Column(name="deleted_at")
 	private LocalDateTime deletedAt;
@@ -33,5 +32,7 @@ public class DeletedUser extends User {
 		super(userName, email, password, profilePicture, favoriteGenres, userVisualContent, userFriends, createdAt);
 		this.deletedAt = deletedAt;
 	}
-	
+	public DeletedUser() {
+		
+	}
 }

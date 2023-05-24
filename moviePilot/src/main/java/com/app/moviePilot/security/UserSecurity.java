@@ -21,9 +21,17 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.stereotype.Component;
+
+import com.app.moviePilot.model.register.UserRegisterDTO;
+import com.app.moviePilot.model.user.User;
 @Component
 public class UserSecurity {
-
+	
+	public UserRegisterDTO encryptData(UserRegisterDTO d) {
+		d.setEmail(stringToEncrypted(d.getEmail(), d.getUsername()));
+		d.setPassword(stringToEncrypted(d.getPassword(), d.getUsername()));
+		return d;
+	}
 	public String stringToEncrypted(final String toEncrypt, final String secretKey) {
 	    try { 
 	        SecretKey secret = generateSecret(secretKey);
