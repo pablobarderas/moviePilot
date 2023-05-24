@@ -19,13 +19,13 @@ public class FilmController {
 	@GetMapping(value = "/popularMovies/page/{page}")
 	public List<Film> getPopularMovies(@PathVariable int page) {
 		FilmParser filmParser = new FilmParser();
-		String URL = "http://api.themoviedb.org/3/movie/popular";
-		List<Film> popularFilms = filmParser.getFilmsFromPage(URL, page);
+		String popular = "movie/popular";
+		List<Film> popularFilms = filmParser.getFilmsFromPage(popular, page);
 		
 		return popularFilms;
 	}
 
-	
+	// one film 
 
 	
 
