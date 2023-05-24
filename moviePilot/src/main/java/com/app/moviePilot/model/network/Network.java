@@ -54,7 +54,5 @@ public class Network {
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
 	}
-	
-	
 
 }//end class
