@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.model.film.Film;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 /**
  * 
