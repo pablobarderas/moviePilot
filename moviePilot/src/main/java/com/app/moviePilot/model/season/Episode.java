@@ -1,21 +1,33 @@
 package com.app.moviePilot.model.season;
 
+import javax.persistence.*;
+
 /**
  * 
  * @author Emilio Izquierdo
  *
  */
+@Entity
+@Table(name = "EPISODES")
 public class Episode {
 
+	@Id
+	@GeneratedValue
     private Long id;
     
+	@Column(nullable = false)
 	private String name;
     private String overview;
     private int runtime;
+    @Column(nullable = false, name="seasion_number")
     private int seasonNumber;
+    @Column(nullable = false, name="episode_number")
     private int episodeNumber;
+    @Column(name="still_path")
     private String stillPath;
+    @Column(name="vote_average_api")
     private double voteAverageApi;
+    @Column(name="vote_count")
     private int voteCount;
     
     private Season season;
