@@ -1,23 +1,6 @@
 package com.app.moviePilot.controller.parser;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-
-import com.app.moviePilot.model.enums.Genres;
-import com.app.moviePilot.model.network.Network;
-import com.app.moviePilot.model.show.Show;
-
-import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +12,23 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.stereotype.Service;
+
+import com.app.moviePilot.model.enums.Genres;
+import com.app.moviePilot.model.network.Network;
+import com.app.moviePilot.model.show.Show;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * Class that constructs Show objects from Jsons
  * and viceversa.
  * @author Arismendy Castillo
  *
  */
+@Service
 public class ShowParser extends DataParser {
 
 	public ShowParser() {
@@ -332,8 +326,8 @@ public class ShowParser extends DataParser {
 
 		for (JsonElement showData : array) {
 			JsonObject showObject = showData.getAsJsonObject();
-			//int id = showObject.get("id").getAsInt();
-			shows.add(fetchShow(showObject));
+			int id = showObject.get("id").getAsInt();
+			shows.add(fetchShow(getJsonShow(id)));
 		}
 
 		return shows;

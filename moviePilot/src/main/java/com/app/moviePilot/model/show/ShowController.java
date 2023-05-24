@@ -2,7 +2,6 @@ package com.app.moviePilot.model.show;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ public class ShowController {
 
     private final ShowParser showParser;
 
-    @Autowired
     public ShowController(ShowParser showService) {
         this.showParser = showService;
     }
