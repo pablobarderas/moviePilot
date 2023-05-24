@@ -25,9 +25,7 @@ public class FilmController {
 	public List<Film> getPopularMovies(@PathVariable int page) {
 		FilmParser filmParser = new FilmParser();
 		String popular = "movie/popular";
-		List<Film> popularFilms = filmParser.getFilmsFromPage(popular, page);
-		
-		return popularFilms;
+		return filmParser.getFilmsFromPage(popular, page);
 	}
 
 	// GET ONE MOVIE
@@ -35,7 +33,6 @@ public class FilmController {
 	public Film getMovie(@PathVariable Long idFilm) {
 		FilmParser filmParser = new FilmParser();
 		JsonElement jsonFilm = filmParser.getJson("https://api.themoviedb.org/3/movie/"+idFilm+"?api_key=6cacd119a397de0ec8845d760efdb7ab");
-		
 		return filmParser.getObject(jsonFilm);
 	}
 
