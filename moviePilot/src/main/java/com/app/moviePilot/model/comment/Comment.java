@@ -7,7 +7,10 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,41 +18,32 @@ import javax.persistence.Table;
 import com.app.moviePilot.model.user.User;
 import com.app.moviePilot.model.visualContent.VisualContent;
 @Entity
-@Table(name="COMMENTS")
-public class Comment {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Comment {
 	@Id
-	@GeneratedValue
-    private long id;
-	/*@ManyToOne
-    private User commentAuthor;*/
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String content;
     private int rating;
     @Column(nullable = false, name="published_at")
     private LocalDateTime publishedAt;
-    @Column(name="deleted_at")
-    private LocalDateTime deletedAt;
-    /*@ManyToOne
-    @JoinColumn(name = "id_content")
-    private VisualContent visualContent;*/
-    // Constructor con parámetros
-    public Comment(long id, String content, int rating, LocalDateTime publishedAt, LocalDateTime deletedAt) {
+
+    public Comment(Long id, String content, int rating, LocalDateTime publishedAt) {
         this.id = id;
         this.content = content;
         this.rating = rating;
         this.publishedAt = publishedAt;
-        this.deletedAt = deletedAt;
     }
 
-    // Constructor vacío
     public Comment() {
     	
     }
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -77,14 +71,4 @@ public class Comment {
 		this.publishedAt = publishedAt;
 	}
 
-	public LocalDateTime getDeletedAt() {
-		return deletedAt;
-	}
-
-	public void setDeletedAt(LocalDateTime deletedAt) {
-		this.deletedAt = deletedAt;
-	}
-
-
-	
 }

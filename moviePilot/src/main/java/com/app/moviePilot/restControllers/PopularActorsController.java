@@ -1,4 +1,4 @@
-package com.app.moviePilot.restController;
+package com.app.moviePilot.restControllers;
 
 import java.util.List;
 

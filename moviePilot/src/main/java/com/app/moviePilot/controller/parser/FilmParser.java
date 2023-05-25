@@ -17,6 +17,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import net.bytebuddy.implementation.bind.annotation.SuperCall;
+
 import com.app.moviePilot.model.enums.Genres;
 import com.app.moviePilot.model.film.Film;
 import com.app.moviePilot.model.film.Languages;
@@ -170,10 +172,10 @@ public class FilmParser extends DataParser {
 	}
 
 	// GET LIST OF FILMS BY PAGE NUMBER
-	public List<Film> getFilmsFromPage(String baseUrl, int page) {
+	public List<Film> getFilmsFromPage(String params, int page) {
 		List<Film> films = new ArrayList<>();
 		Client client = ClientBuilder.newClient();
-		String url = baseUrl + "&page=" + page;
+		String url = super.getUrl() + params + super.getApikey() + "&page=" + page;
 		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
 		String json = response.readEntity(String.class);
 		JsonObject pageObject = JsonParser.parseString(json).getAsJsonObject();

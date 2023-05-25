@@ -28,6 +28,7 @@ import com.app.moviePilot.model.enums.Genres;
  *
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class VisualContent {
 	
 	private Long idApi;

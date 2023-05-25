@@ -1,5 +1,7 @@
 package com.app.moviePilot.model.season;
 
+import javax.persistence.*;
+
 /**
  * 
  * @author Emilio Izquierdo
