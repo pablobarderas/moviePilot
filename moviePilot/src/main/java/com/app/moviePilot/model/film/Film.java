@@ -14,7 +14,6 @@ import com.app.moviePilot.model.visualContent.VisualContent;
 
 @Entity
 @Table(name = "FILMS")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Film extends VisualContent{
 
 	@Transient

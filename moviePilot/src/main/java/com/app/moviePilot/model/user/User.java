@@ -10,6 +10,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +29,7 @@ import javax.persistence.JoinColumn;
 
 import com.app.moviePilot.model.comment.Comment;
 import com.app.moviePilot.model.enums.Genres;
+import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
@@ -34,31 +37,33 @@ import com.app.moviePilot.model.visualContent.VisualContent;
  *
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private Long id;
-	@Column(nullable = false, name="user_name", unique=true)
+	@Column(nullable = false, name="username", unique=true)
 	private String username;
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String email;
 	@Column(nullable = false)
 	private String password;
 	@Column(name="profile_picture")
 	private String profilePicture;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 	  name = "user_genres", 
 	  joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genres> favoriteGenres;
-	@ElementCollection
-	@MapKeyColumn(name="list_id")
-	@Column(name="value")
-	@CollectionTable(name="USER_LISTS", joinColumns=@JoinColumn(name="user_id"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	  name = "user_lits", 
+	  joinColumns = @JoinColumn(name = "user_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "content_id"))
 	private Set<VisualContent> userVisualContent;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 	    name = "user_friends",
 	    joinColumns = @JoinColumn(name = "user_id"),
@@ -67,8 +72,17 @@ public abstract class User {
 	private Set<ActiveUser> userFriends;
 	@Column(nullable = false, name="created_at")
 	private LocalDateTime createdAt;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
+	@Column(name = "role", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'NORMAL_USER'")
+	@Enumerated(EnumType.STRING)
+	private Role role = Role.NORMAL_USER;
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -78,11 +92,11 @@ public abstract class User {
 	public User() {
 		
 	}
-	public User(String userName, String email, String password, String profilePicture,
+	public User(String username, String email, String password, String profilePicture,
 			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
-			LocalDateTime createdAt) {
+			LocalDateTime createdAt, List<Comment> comments, Role role) {
 		super();
-		this.username = userName;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.profilePicture = profilePicture;
@@ -90,6 +104,8 @@ public abstract class User {
 		this.userVisualContent = userVisualContent;
 		this.userFriends = userFriends;
 		this.createdAt = createdAt;
+		this.comments = comments;
+		this.role = role;
 	}
 	public Long getId() {
 		return id;
@@ -145,11 +161,13 @@ public abstract class User {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + username + ", email=" + email + ", password=" + password
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
 				+ ", profilePicture=" + profilePicture + ", favoriteGenres=" + favoriteGenres + ", userVisualContent="
-				+ userVisualContent + ", userFriends=" + userFriends + ", createdAt=" + createdAt + "]";
+				+ userVisualContent + ", userFriends=" + userFriends + ", createdAt=" + createdAt + ", comments="
+				+ comments + ", role=" + role + "]";
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -160,10 +178,13 @@ public abstract class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
-				&& Objects.equals(favoriteGenres, other.favoriteGenres) && id == other.id
-				&& Objects.equals(password, other.password) && Objects.equals(profilePicture, other.profilePicture)
-				&& Objects.equals(userFriends, other.userFriends) && Objects.equals(username, other.username)
-				&& Objects.equals(userVisualContent, other.userVisualContent);
+		return Objects.equals(comments, other.comments) && Objects.equals(createdAt, other.createdAt)
+				&& Objects.equals(email, other.email) && Objects.equals(favoriteGenres, other.favoriteGenres)
+				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
+				&& Objects.equals(profilePicture, other.profilePicture) && role == other.role
+				&& Objects.equals(userFriends, other.userFriends)
+				&& Objects.equals(userVisualContent, other.userVisualContent)
+				&& Objects.equals(username, other.username);
 	}
+	
 }

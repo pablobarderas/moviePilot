@@ -152,9 +152,11 @@ class ObjectFilmTests {
 
 	@Test
 	void testListObjectByPage() {
+
 		int page = 1;
 		List<Film> listFilmToCompare = new ArrayList<>();
 		List<Film> listFilm = filmParser.getFilmsFromPage("discover/movie", page);
+
 		assertNotNull(listFilm);
 
 		// GET SAME DATA FROM API TO COMPARE WITH METHOD

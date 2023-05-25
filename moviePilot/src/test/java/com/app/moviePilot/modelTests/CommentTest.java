@@ -5,21 +5,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.app.moviePilot.model.comment.AvailableComment;
 import com.app.moviePilot.model.comment.Comment;
+import com.app.moviePilot.model.comment.DeletedComment;
+/**
+ * Alex, Marino Burillo
+ */
+class CommentTest {
 
-public class CommentTest {
 
-	Comment newComment;
-	
-	@BeforeEach
-	public void setup() {
-		newComment = new Comment();
-	}
-	
 	@Test
-	public void testCreateComment() {
-		assertInstanceOf(Comment.class, newComment);
-		assertNotNull(newComment);
+	void testCreateAvailableComment() {
+		assertNotNull(new AvailableComment());
 	}
-    
+    @Test
+    void createEmptyDeletedCommentTest() {
+    	assertNotNull(new DeletedComment());
+    }
 }
