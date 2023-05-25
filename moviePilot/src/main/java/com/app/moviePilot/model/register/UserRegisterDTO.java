@@ -4,12 +4,12 @@ package com.app.moviePilot.model.register;
  * @author Marino Burillo
  *
  */
-public class RegisterData {
+public class UserRegisterDTO {
 	private String username;
 	private String password;
 	private String email;
 	
-	public RegisterData(String username, String password, String email) {
+	public UserRegisterDTO(String username, String password, String email) {
 		super();
 		this.username = username;
 		this.password = password;
