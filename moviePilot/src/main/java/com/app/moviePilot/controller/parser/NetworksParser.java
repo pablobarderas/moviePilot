@@ -1,10 +1,14 @@
 package com.app.moviePilot.controller.parser;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import com.app.moviePilot.model.network.Network;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -42,6 +46,16 @@ public class NetworksParser extends DataParser{
 			return null;
 		}
 		return newJson;
+	}
+	
+	public List<Network> toList(JsonElement el){
+		List<Network> networkList = new LinkedList();
+		for(JsonElement element: el.getAsJsonObject().get("result").getAsJsonArray()) {
+			JsonObject objAux = element.getAsJsonObject();
+			networkList.add(new Network(objAux.get("id").getAsInt(), objAux.get("name").getAsString(), objAux.get("logoPath").getAsString()));
+		}
+		
+		return networkList;
 	}
 
 }

@@ -1,10 +1,14 @@
 package com.app.moviePilot.controller.parser;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import com.app.moviePilot.model.mediaPersonnel.CastMember;
 import com.google.gson.*;
 
 public class PopularActorsParser extends DataParser{
@@ -17,7 +21,6 @@ public class PopularActorsParser extends DataParser{
 	@Override
 	public JsonElement getJson(String url) {
 		Client client = ClientBuilder.newClient();
-		JsonArray castJson = new JsonArray();
 		JsonObject newJson = new JsonObject();
 		try {
 			WebTarget service = client.target(url);
@@ -36,6 +39,16 @@ public class PopularActorsParser extends DataParser{
 			return null;
 		}
 		return newJson;
+	}
+	
+	public List<CastMember> toList(JsonElement el){
+		List<CastMember> popularList = new LinkedList();
+		for(JsonElement e: el.getAsJsonObject().get("result").getAsJsonArray()) {
+			JsonObject o = e.getAsJsonObject();
+			popularList.add(new CastMember(o.get("id").getAsLong(), o.get("name").getAsString().replaceAll("\\", ""), o.get("profile_path").toString(), null));
+		}
+		
+		return popularList;
 	}
 
 }
