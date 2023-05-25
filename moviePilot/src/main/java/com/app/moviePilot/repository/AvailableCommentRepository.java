@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.app.moviePilot.model.comment.AvailableComment;
-import com.app.moviePilot.model.user.ActiveUser;
 
 /**
  * 
@@ -14,5 +13,5 @@ import com.app.moviePilot.model.user.ActiveUser;
 @Repository
 public interface AvailableCommentRepository extends JpaRepository<AvailableComment, Long> {
 
-
+	
 }

@@ -10,6 +10,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +29,7 @@ import javax.persistence.JoinColumn;
 
 import com.app.moviePilot.model.comment.Comment;
 import com.app.moviePilot.model.enums.Genres;
+import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
@@ -71,6 +74,15 @@ public abstract class User {
 	private LocalDateTime createdAt;
 	@OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
+	@Column(name = "role", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -80,11 +92,12 @@ public abstract class User {
 	public User() {
 		
 	}
-	public User(String userName, String email, String password, String profilePicture,
+	public User(Long id, String username, String email, String password, String profilePicture,
 			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
-			LocalDateTime createdAt) {
+			LocalDateTime createdAt, List<Comment> comments, Role role) {
 		super();
-		this.username = userName;
+		this.id = id;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.profilePicture = profilePicture;
@@ -92,6 +105,8 @@ public abstract class User {
 		this.userVisualContent = userVisualContent;
 		this.userFriends = userFriends;
 		this.createdAt = createdAt;
+		this.comments = comments;
+		this.role = role;
 	}
 	public Long getId() {
 		return id;
@@ -147,11 +162,13 @@ public abstract class User {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + username + ", email=" + email + ", password=" + password
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
 				+ ", profilePicture=" + profilePicture + ", favoriteGenres=" + favoriteGenres + ", userVisualContent="
-				+ userVisualContent + ", userFriends=" + userFriends + ", createdAt=" + createdAt + "]";
+				+ userVisualContent + ", userFriends=" + userFriends + ", createdAt=" + createdAt + ", comments="
+				+ comments + ", role=" + role + "]";
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -162,10 +179,13 @@ public abstract class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
-				&& Objects.equals(favoriteGenres, other.favoriteGenres) && id == other.id
-				&& Objects.equals(password, other.password) && Objects.equals(profilePicture, other.profilePicture)
-				&& Objects.equals(userFriends, other.userFriends) && Objects.equals(username, other.username)
-				&& Objects.equals(userVisualContent, other.userVisualContent);
+		return Objects.equals(comments, other.comments) && Objects.equals(createdAt, other.createdAt)
+				&& Objects.equals(email, other.email) && Objects.equals(favoriteGenres, other.favoriteGenres)
+				&& Objects.equals(id, other.id) && Objects.equals(password, other.password)
+				&& Objects.equals(profilePicture, other.profilePicture) && role == other.role
+				&& Objects.equals(userFriends, other.userFriends)
+				&& Objects.equals(userVisualContent, other.userVisualContent)
+				&& Objects.equals(username, other.username);
 	}
+	
 }
