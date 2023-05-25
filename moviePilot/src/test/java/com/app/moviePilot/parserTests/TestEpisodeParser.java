@@ -2,24 +2,27 @@ package com.app.moviePilot.parserTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.app.moviePilot.controller.parser.EpisodeParser;
 import com.app.moviePilot.model.season.Episode;
 
 
-
+@SpringBootTest
 class TestEpisodeParser {
 
 	private final String URL = "https://api.themoviedb.org/3/tv/";
 	private final String API_KEY= "?api_key=6cacd119a397de0ec8845d760efdb7ab";
 	
+	@Autowired
 	EpisodeParser episodeParser;
-	@BeforeEach
-	public void setup() {
-		episodeParser = new EpisodeParser();
-	}
+	
+//	@BeforeEach
+//	public void setup() {
+//		episodeParser = new EpisodeParser();
+//	}
 	
 	@Test
 	public void testIsCorrect() {
