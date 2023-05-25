@@ -5,6 +5,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.stereotype.Component;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +18,7 @@ import com.google.gson.JsonParser;
  * @author Emilio Izquierdo
  *
  */
+ @Component
 public class EpisodeParser extends DataParser{
 	
 	public boolean isCorrectFormat(JsonElement episodeJson) {
