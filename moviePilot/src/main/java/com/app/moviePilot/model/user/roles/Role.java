@@ -1,7 +1,11 @@
 package com.app.moviePilot.model.user.roles;
-
+/**
+ * 
+ * @author Marino Burillo
+ *
+ */
 public enum Role {
 
-Normal_User, Admin
+NORMAL_USER, ADMIN
 
 }

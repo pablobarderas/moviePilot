@@ -23,7 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Component;
 
 import com.app.moviePilot.model.register.UserRegisterDTO;
-import com.app.moviePilot.model.user.User;
+
 @Component
 public class UserSecurity {
 	

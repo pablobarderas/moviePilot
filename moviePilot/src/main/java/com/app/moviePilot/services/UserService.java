@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
-
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
 import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
+import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.repository.ActiveUserRepository;
 /**
  * 
@@ -54,5 +54,9 @@ public class UserService {
 		user.setProfilePicture(userToUpdate.getProfilePicture());
 		user.setUserVisualContent(user.getUserVisualContent());
 		return userRepository.save(user);
+	}
+	public ActiveUser makeUserAdmin(ActiveUser u) {
+		u.setRole(Role.ADMIN);
+		return userRepository.save(u);
 	}
 }

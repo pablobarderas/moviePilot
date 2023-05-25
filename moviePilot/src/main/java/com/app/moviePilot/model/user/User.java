@@ -74,9 +74,9 @@ public abstract class User {
 	private LocalDateTime createdAt;
 	@OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
-	@Column(name = "role", nullable = false)
+	@Column(name = "role", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'NORMAL_USER'")
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role = Role.NORMAL_USER;
 	public Role getRole() {
 		return role;
 	}
@@ -92,11 +92,10 @@ public abstract class User {
 	public User() {
 		
 	}
-	public User(Long id, String username, String email, String password, String profilePicture,
+	public User(String username, String email, String password, String profilePicture,
 			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
 			LocalDateTime createdAt, List<Comment> comments, Role role) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;

@@ -28,10 +28,10 @@ public class DeletedUser extends User {
 	}
 
 	
-	public DeletedUser(Long id, String username, String email, String password, String profilePicture,
+	public DeletedUser(String username, String email, String password, String profilePicture,
 			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
 			LocalDateTime createdAt, List<Comment> comments, Role role) {
-		super(id, username, email, password, profilePicture, favoriteGenres, userVisualContent, userFriends, createdAt,
+		super(username, email, password, profilePicture, favoriteGenres, userVisualContent, userFriends, createdAt,
 				comments, role);
 	}
 

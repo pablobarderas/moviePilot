@@ -11,11 +11,14 @@ import com.app.moviePilot.model.register.UserUpdateDTO;
  * @author Marino Burillo
  *
  */
-class UserUpdateDTOTest {
+class UserDTOTest {
 
 	@Test
-	void creationTest() {
+	void creationRegisterTest() {
+		assertNotNull(new UserRegisterDTO("username", "password", "email"));
+	}
+	@Test
+	void creationUpdateTest() {
 		assertNotNull(new UserUpdateDTO("username", "password", "email"));
 	}
-
 }

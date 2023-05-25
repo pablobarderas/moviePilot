@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
 import com.app.moviePilot.model.user.ActiveUser;
+import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.services.UserService;
 /**
  * 
@@ -66,6 +67,14 @@ class UserServiceTest {
 		assertNotNull(u);
 		assertEquals(username, u.getUserName());
 		assertNotEquals(email, u.getEmail());
+		userService.deleteUser(u);
+	}
+	@Test
+	void makeUserAdminTest() {
+		ActiveUser u =userService.registerDataToUser(registerData);
+		u=userService.makeUserAdmin(u);
+		assertNotNull(u);
+		assertEquals(Role.ADMIN, u.getRole());
 		userService.deleteUser(u);
 	}
 }
