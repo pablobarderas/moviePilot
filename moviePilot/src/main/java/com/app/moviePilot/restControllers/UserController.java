@@ -1,5 +1,10 @@
 package com.app.moviePilot.restControllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.lang.reflect.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.moviePilot.controller.register.UserImageManager;
+import com.app.moviePilot.config.GsonDeserializerBuilder;
 import com.app.moviePilot.controller.register.RegisterValidator;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
@@ -25,6 +31,12 @@ import com.app.moviePilot.repository.ActiveUserRepository;
 import com.app.moviePilot.security.UserSecurity;
 import com.app.moviePilot.services.DeletedUserService;
 import com.app.moviePilot.services.UserService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 /**
  * 
@@ -77,7 +89,9 @@ public class UserController {
 	}
 
 	@PostMapping("user/update")
-	public ResponseEntity<User> getUserToUpdate(@RequestParam("image") final MultipartFile file, @RequestBody UserUpdateDTO userToUpdate) {
+	public ResponseEntity<User> getUserToUpdate(@RequestParam("image") final MultipartFile file, @RequestParam("user") final String userJson) {
+		Gson gson = GsonDeserializerBuilder.getDeserializedGson();
+		UserUpdateDTO userToUpdate = gson.fromJson(userJson, UserUpdateDTO.class);
 		UserUpdateDTO validatedFields = (UserUpdateDTO) RegisterValidator.checkRegex(userToUpdate);
 		if (dataToUser.getUser(userToUpdate.getUsername()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
