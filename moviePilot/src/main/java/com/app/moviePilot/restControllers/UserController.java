@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.moviePilot.controller.register.UserImageManager;
@@ -30,7 +31,7 @@ import com.app.moviePilot.services.UserService;
  * @author Marino Burillo
  *
  */
-@Controller
+@RestController
 public class UserController {
 	@Autowired
 	UserService dataToUser;
@@ -76,14 +77,14 @@ public class UserController {
 	}
 
 	@PostMapping("user/update")
-	public ResponseEntity<User> getUserToUpdate(@RequestParam("image") final MultipartFile file, final @RequestBody UserUpdateDTO userToUpdate) {
+	public ResponseEntity<User> getUserToUpdate(@RequestParam("image") final MultipartFile file, @RequestBody UserUpdateDTO userToUpdate) {
 		UserUpdateDTO validatedFields = (UserUpdateDTO) RegisterValidator.checkRegex(userToUpdate);
 		if (dataToUser.getUser(userToUpdate.getUsername()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}			
 		if (validatedFields == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-		}			
+		}	
 		if(file!=null) UserImageManager.saveImage(file);
 		User updatedUser = dataToUser.updateUser((UserUpdateDTO) userSec.encryptData(validatedFields));
 		if (updatedUser == null) ResponseEntity.noContent();			

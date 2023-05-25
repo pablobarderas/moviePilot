@@ -20,6 +20,17 @@ public class UserUpdateDTO extends UserRegisterDTO {
 	private LocalDateTime createdAt;
     private List<Comment> comments;
     
+	public UserUpdateDTO(String username, String password, String email, String profilePicture,
+			Set<Genres> favoriteGenres, Set<VisualContent> userVisualContent, Set<ActiveUser> userFriends,
+			LocalDateTime createdAt, List<Comment> comments) {
+		super(username, password, email);
+		this.profilePicture = profilePicture;
+		this.favoriteGenres = favoriteGenres;
+		this.userVisualContent = userVisualContent;
+		this.userFriends = userFriends;
+		this.createdAt = createdAt;
+		this.comments = comments;
+	}
 	public String getProfilePicture() {
 		return profilePicture;
 	}
