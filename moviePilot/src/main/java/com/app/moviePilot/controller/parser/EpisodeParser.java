@@ -74,12 +74,12 @@ public class EpisodeParser extends DataParser{
 				JsonElement voteAverageApi = jsonEpisode.get("vote_average");
 				JsonElement voteCount = jsonEpisode.get("vote_count");
 				JsonElement id = jsonEpisode.get("id");
-				if(name!=null) episodeAux.setName(name.toString());
+				if(name!=null) episodeAux.setName(name.getAsString());
 				if(overview!=null) episodeAux.setOverview(overview.getAsString());
 				if(runtime!=null) episodeAux.setRuntime(runtime.getAsInt());
 				if(seasonNumber!=null) episodeAux.setSeasonNumber(seasonNumber.getAsInt());
 				if(episodeNumber!=null) episodeAux.setEpisodeNumber(episodeNumber.getAsInt());
-				if(stillPath!=null) episodeAux.setStillPath(stillPath.toString());
+				if(stillPath!=null) episodeAux.setStillPath(stillPath.getAsString());
 				if(voteAverageApi!=null) episodeAux.setVoteAverageApi(voteAverageApi.getAsDouble());
 				if(voteCount!=null) episodeAux.setVoteCount(voteCount.getAsInt());
 				if(id!=null) episodeAux.setId(id.getAsLong());
