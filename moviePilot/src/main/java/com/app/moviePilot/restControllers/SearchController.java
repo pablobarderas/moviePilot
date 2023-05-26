@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.controller.parser.ShowParser;
-import com.app.moviePilot.model.film.Film;
 import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
