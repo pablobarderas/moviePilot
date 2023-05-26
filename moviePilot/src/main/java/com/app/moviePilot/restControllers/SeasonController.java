@@ -1,11 +1,13 @@
 package com.app.moviePilot.restControllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.moviePilot.controller.parser.SeasonParser;
 import com.app.moviePilot.model.season.Season;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class SeasonController {
 	
