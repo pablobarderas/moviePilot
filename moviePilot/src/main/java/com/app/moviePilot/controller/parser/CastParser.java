@@ -68,9 +68,9 @@ public class CastParser extends DataParser{
 				JsonElement character = obAux.get("character");
 				
 				if(!id.isJsonNull()) castMemberAux.setId(id.getAsLong());
-				if(!name.isJsonNull()) castMemberAux.setName(name.toString());
-				if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.toString());
-				if(!character.isJsonNull()) castMemberAux.setCharacterName(character.toString());
+				if(!name.isJsonNull()) castMemberAux.setName(name.getAsString());
+				if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.getAsString());
+				if(!character.isJsonNull()) castMemberAux.setCharacterName(character.getAsString());
 				
 				castList.add(castMemberAux);
 			}

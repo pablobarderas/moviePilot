@@ -37,9 +37,9 @@ public class NetworksParser extends DataParser{
 			JsonArray arrayNetworks = new JsonArray();
 			for(JsonElement o: JsonParser.parseString(jsonResponse).getAsJsonObject().get("results").getAsJsonArray()) {
 				JsonObject networkAux = new JsonObject();
-				networkAux.addProperty("id", o.getAsJsonObject().get("provider_id").toString());
-				networkAux.addProperty("name", o.getAsJsonObject().get("provider_name").toString());
-				networkAux.addProperty("logoPath", o.getAsJsonObject().get("logo_path").toString());
+				networkAux.addProperty("id", o.getAsJsonObject().get("provider_id").getAsString());
+				networkAux.addProperty("name", o.getAsJsonObject().get("provider_name").getAsString());
+				networkAux.addProperty("logoPath", o.getAsJsonObject().get("logo_path").getAsString());
 				arrayNetworks.add(networkAux);
 			}
 			newJson.add("result", arrayNetworks);
