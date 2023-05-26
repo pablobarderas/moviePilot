@@ -55,23 +55,27 @@ public class CastParser extends DataParser{
 	}
 	
 	//creates a list of castmembers from a cast json
-	public Set<CastMember> getObjectCast(JsonElement el) {
+	public Set<CastMember> getObject(JsonElement el) {
 		Set<CastMember> castList = new HashSet<>();
 		JsonArray castArray = el.getAsJsonArray();
-		for(JsonElement elem: castArray) {
-			JsonObject obAux = elem.getAsJsonObject();
-			CastMember castMemberAux = new CastMember();
-			JsonElement id = obAux.get("id");
-			JsonElement name = obAux.get("name");
-			JsonElement profilePath = obAux.get("profile_path");
-			JsonElement character = obAux.get("character");
-			
-			if(!id.isJsonNull()) castMemberAux.setId(id.getAsLong());
-			if(!name.isJsonNull()) castMemberAux.setName(name.toString());
-			if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.toString());
-			if(!character.isJsonNull()) castMemberAux.setCharacterName(character.toString());
-			
-			castList.add(castMemberAux);
+		try {
+			for(JsonElement elem: castArray) {
+				JsonObject obAux = elem.getAsJsonObject();
+				CastMember castMemberAux = new CastMember();
+				JsonElement id = obAux.get("id");
+				JsonElement name = obAux.get("name");
+				JsonElement profilePath = obAux.get("profile_path");
+				JsonElement character = obAux.get("character");
+				
+				if(!id.isJsonNull()) castMemberAux.setId(id.getAsLong());
+				if(!name.isJsonNull()) castMemberAux.setName(name.toString());
+				if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.toString());
+				if(!character.isJsonNull()) castMemberAux.setCharacterName(character.toString());
+				
+				castList.add(castMemberAux);
+			}
+		}catch(Exception e) {
+			return castList;
 		}
 		return castList;
 	}

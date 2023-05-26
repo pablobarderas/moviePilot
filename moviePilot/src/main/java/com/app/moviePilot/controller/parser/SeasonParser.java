@@ -60,27 +60,31 @@ public class SeasonParser extends DataParser{
 	//creates a season object from a season json
 	public Season getObject(JsonElement el) {
 		Season obj = new Season();
-		JsonElement name = el.getAsJsonObject().get("name");
-		JsonElement air_date = el.getAsJsonObject().get("air_date");
-		JsonElement overview = el.getAsJsonObject().get("overview");
-		JsonElement poster_path = el.getAsJsonObject().get("poster_path");
-		JsonElement season_number = el.getAsJsonObject().get("season_number");
-		JsonElement episodes = el.getAsJsonObject().get("episodes");
-		if(name!=null)
-			obj.setName(el.getAsJsonObject().get("name").getAsString());
-		if(air_date!=null)
-			obj.setAirDate(el.getAsJsonObject().get("air_date").getAsString());
-		if(overview!=null)
-			obj.setOverview(el.getAsJsonObject().get("overview").getAsString());
-		if(poster_path!=null)
-			obj.setPosterPath(el.getAsJsonObject().get("poster_path").getAsString());
-		if(season_number!=null)
-			obj.setSeasonNumber(Integer.parseInt(el.getAsJsonObject().get("season_number").getAsString()));
-		JsonArray arrEpisodes = el.getAsJsonObject().get("episodes").getAsJsonArray();
-		Set<Episode> episodeList = new HashSet<>();
-		EpisodeParser episodeParser = new EpisodeParser();
-		for(JsonElement o: arrEpisodes) {
-			episodeList.add(episodeParser.getObject(o.getAsJsonObject()));
+		try {
+			JsonElement name = el.getAsJsonObject().get("name");
+			JsonElement air_date = el.getAsJsonObject().get("air_date");
+			JsonElement overview = el.getAsJsonObject().get("overview");
+			JsonElement poster_path = el.getAsJsonObject().get("poster_path");
+			JsonElement season_number = el.getAsJsonObject().get("season_number");
+			if(name!=null)
+				obj.setName(el.getAsJsonObject().get("name").getAsString());
+			if(air_date!=null)
+				obj.setAirDate(el.getAsJsonObject().get("air_date").getAsString());
+			if(overview!=null)
+				obj.setOverview(el.getAsJsonObject().get("overview").getAsString());
+			if(poster_path!=null)
+				obj.setPosterPath(el.getAsJsonObject().get("poster_path").getAsString());
+			if(season_number!=null)
+				obj.setSeasonNumber(Integer.parseInt(el.getAsJsonObject().get("season_number").getAsString()));
+			JsonArray arrEpisodes = el.getAsJsonObject().get("episodes").getAsJsonArray();
+			Set<Episode> episodeList = new HashSet<>();
+			EpisodeParser episodeParser = new EpisodeParser();
+			for(JsonElement o: arrEpisodes) {
+				episodeList.add(episodeParser.getObject(o.getAsJsonObject()));
+			}
+			obj.setEpisodes(episodeList);
+		}catch(Exception e) {
+			return obj;
 		}
 		return obj;
 	}

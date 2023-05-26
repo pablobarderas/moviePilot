@@ -43,10 +43,10 @@ public class PopularActorsParser extends DataParser{
 	}
 	
 	public List<CastMember> toList(JsonElement el){
-		List<CastMember> popularList = new LinkedList();
+		List<CastMember> popularList = new LinkedList<>();
 		for(JsonElement e: el.getAsJsonObject().get("result").getAsJsonArray()) {
 			JsonObject o = e.getAsJsonObject();
-			popularList.add(new CastMember(o.get("id").getAsLong(), o.get("name").getAsString().replaceAll("\\", ""), o.get("profile_path").toString(), null));
+			popularList.add(new CastMember(o.get("id").getAsLong(), o.get("name").getAsString(), o.get("profile_path").getAsString(), null));
 		}
 		
 		return popularList;
