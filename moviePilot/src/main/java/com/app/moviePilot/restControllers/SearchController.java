@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.controller.parser.ShowParser;
-import com.app.moviePilot.model.film.Film;
 import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
@@ -20,7 +19,6 @@ import com.app.moviePilot.model.visualContent.VisualContent;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/search")
 public class SearchController {
 
