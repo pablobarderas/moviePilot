@@ -21,7 +21,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
+import com.app.moviePilot.model.mediaPersonnel.CastMember;
 import com.app.moviePilot.model.mediaPersonnel.CrewMember;
 import com.app.moviePilot.model.season.Season;
 
@@ -66,19 +66,6 @@ public class CrewParser extends DataParser{
 			return castList;
 		}
 		
-		public CrewMember toObject(JsonElement el) {
-			JsonObject jObj = el.getAsJsonObject();
-			CrewMember crewAux = new CrewMember();
-			JsonElement id = jObj.get("id");
-			JsonElement name = jObj.get("name");
-			JsonElement job = jObj.get("job");
-			if(id!=null) crewAux.setId(id.getAsLong());
-			if(name!=null) crewAux.setName(name.toString());
-			if(job!=null) crewAux.setJob(job.toString());
-			
-			return crewAux;
-		}
-		
 		public <CrewMember> JsonElement toJson(CrewMember object) {
 			Gson gson = new GsonBuilder()
 		            .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
@@ -100,5 +87,28 @@ public class CrewParser extends DataParser{
 		            .create();
 
 		    return gson.toJsonTree(object);
+		}
+
+		public Set<CrewMember> getObject(JsonElement el) {
+			Set<CrewMember> crewList = new HashSet<>();
+			JsonArray crewArray = el.getAsJsonArray();
+			try {
+				for(JsonElement elem: crewArray) {
+					JsonObject obAux = elem.getAsJsonObject();
+					CrewMember crewAux = new CrewMember();
+					JsonElement id = obAux.get("id");
+					JsonElement name = obAux.get("name");
+					JsonElement job = obAux.get("job");
+					
+					if(id!=null) crewAux.setId(id.getAsLong());
+					if(name!=null) crewAux.setName(name.getAsString());
+					if(job!=null) crewAux.setJob(job.getAsString());
+					
+					crewList.add(crewAux);
+				}
+			}catch(Exception e) {
+				return crewList;
+			}
+			return crewList;
 		}
 }
