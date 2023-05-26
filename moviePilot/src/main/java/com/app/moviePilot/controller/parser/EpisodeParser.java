@@ -53,6 +53,8 @@ public class EpisodeParser extends DataParser{
 	 * @return an episode object with the info from the json
 	 */
 	public Episode getObject(JsonElement o) {
+		Episode episodeAux = new Episode();
+
 		try {
 			if(isCorrectFormat(o)) {
 				JsonObject jsonEpisode = o.getAsJsonObject();
@@ -65,7 +67,7 @@ public class EpisodeParser extends DataParser{
 				JsonElement stillPath = jsonEpisode.get("still_path");
 				JsonElement voteAverageApi = jsonEpisode.get("vote_average");
 				JsonElement voteCount = jsonEpisode.get("vote_count");
-				Episode episodeAux = new Episode();
+				JsonElement id = jsonEpisode.get("id");
 				if(name!=null) episodeAux.setName(name.toString());
 				if(overview!=null) episodeAux.setOverview(overview.getAsString());
 				if(runtime!=null) episodeAux.setRuntime(runtime.getAsInt());
@@ -74,14 +76,12 @@ public class EpisodeParser extends DataParser{
 				if(stillPath!=null) episodeAux.setStillPath(stillPath.toString());
 				if(voteAverageApi!=null) episodeAux.setVoteAverageApi(voteAverageApi.getAsDouble());
 				if(voteCount!=null) episodeAux.setVoteCount(voteCount.getAsInt());
-
-				return episodeAux;
+				if(id!=null) episodeAux.setId(id.getAsLong());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new Episode();
+			return episodeAux;
 		}
-		return null;
+		return episodeAux;
 	}//end method
 	
 	/**
