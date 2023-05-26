@@ -19,6 +19,7 @@ public class UserUpdateDTO extends UserRegisterDTO {
 	private Set<ActiveUser> userFriends;
 	private LocalDateTime createdAt;
     private List<Comment> comments;
+    
 	public String getProfilePicture() {
 		return profilePicture;
 	}
