@@ -38,10 +38,18 @@ public class SearchController {
 	
 	// GET ALL MOVIES FROM PAGE
 	@GetMapping(value = "/movie/{keyword}/page/{page}")
-	public List<VisualContent> getMovieResults(@PathVariable String keyword, @PathVariable int page) {
+	public List<VisualContent> getFilmsFromPage(@PathVariable String keyword, @PathVariable int page) {
 		FilmParser filmParser = new FilmParser();
 		List<VisualContent> filmsList = filmParser.getVisualContentFromPage("search/movie", "&query="+keyword, page);
 		return  filmsList;
+	}
+
+	// GET ALL SHOWS FROM PAGE
+	@GetMapping(value = "/tv/{keyword}/page/{page}")
+	public List<VisualContent> getMovieResults(@PathVariable String keyword, @PathVariable int page) {
+		ShowParser showParser = new ShowParser();
+		List<VisualContent> showsList = showParser.getVisualContentFromPage("search/tv", "&query="+keyword, page);
+		return  showsList;
 	}
 	
 }
