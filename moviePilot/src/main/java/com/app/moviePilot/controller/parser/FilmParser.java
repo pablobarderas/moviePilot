@@ -22,6 +22,7 @@ import net.bytebuddy.implementation.bind.annotation.SuperCall;
 import com.app.moviePilot.model.enums.Genres;
 import com.app.moviePilot.model.film.Film;
 import com.app.moviePilot.model.film.Languages;
+import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
  * 
@@ -170,6 +171,7 @@ public class FilmParser extends DataParser {
 
 	}
 
+	
 	// GET LIST OF FILMS BY PAGE NUMBER
 	public List<Film> getFilmsFromPage(String params, int page) {
 		List<Film> films = new ArrayList<>();
@@ -189,20 +191,21 @@ public class FilmParser extends DataParser {
 	}// end method
 
 	// GET LIST OF FILMS BY PAGE NUMBER
-	public List<Film> getFilmsFromPage(String endPoints, String params, int page) {
-		List<Film> films = new ArrayList<>();
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		List<VisualContent> films = new ArrayList<>();
 		Client client = ClientBuilder.newClient();
 		String url = super.getUrl() + endPoints + super.getApikey() + params + "&page=" + page;
 		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
 		String json = response.readEntity(String.class);
 		JsonObject pageObject = JsonParser.parseString(json).getAsJsonObject();
 		JsonArray array = pageObject.getAsJsonArray("results");
-		
+
 		for (JsonElement showData : array) {
 			JsonObject showObject = showData.getAsJsonObject();
 			films.add(getObject(showObject));
 		}
-		
+
 		return films;
 	}// end method
 }

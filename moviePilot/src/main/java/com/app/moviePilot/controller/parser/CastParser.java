@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.client.Client;
@@ -23,6 +24,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
+import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
  * @author Alberto Johnson
@@ -53,23 +55,27 @@ public class CastParser extends DataParser{
 	}
 	
 	//creates a list of castmembers from a cast json
-	public Set<CastMember> getObjectCast(JsonElement el) {
+	public Set<CastMember> getObject(JsonElement el) {
 		Set<CastMember> castList = new HashSet<>();
 		JsonArray castArray = el.getAsJsonArray();
-		for(JsonElement elem: castArray) {
-			JsonObject obAux = elem.getAsJsonObject();
-			CastMember castMemberAux = new CastMember();
-			JsonElement id = obAux.get("id");
-			JsonElement name = obAux.get("name");
-			JsonElement profilePath = obAux.get("profile_path");
-			JsonElement character = obAux.get("character");
-			
-			if(!id.isJsonNull()) castMemberAux.setId(id.getAsLong());
-			if(!name.isJsonNull()) castMemberAux.setName(name.toString());
-			if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.toString());
-			if(!character.isJsonNull()) castMemberAux.setCharacterName(character.toString());
-			
-			castList.add(castMemberAux);
+		try {
+			for(JsonElement elem: castArray) {
+				JsonObject obAux = elem.getAsJsonObject();
+				CastMember castMemberAux = new CastMember();
+				JsonElement id = obAux.get("id");
+				JsonElement name = obAux.get("name");
+				JsonElement profilePath = obAux.get("profile_path");
+				JsonElement character = obAux.get("character");
+				
+				if(!id.isJsonNull()) castMemberAux.setId(id.getAsLong());
+				if(!name.isJsonNull()) castMemberAux.setName(name.toString());
+				if(!profilePath.isJsonNull()) castMemberAux.setProfilePath(profilePath.toString());
+				if(!character.isJsonNull()) castMemberAux.setCharacterName(character.toString());
+				
+				castList.add(castMemberAux);
+			}
+		}catch(Exception e) {
+			return castList;
 		}
 		return castList;
 	}
@@ -96,5 +102,12 @@ public class CastParser extends DataParser{
 
 	    return gson.toJsonTree(object);
 	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

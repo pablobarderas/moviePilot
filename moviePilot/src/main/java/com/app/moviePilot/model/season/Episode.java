@@ -100,6 +100,21 @@ public class Episode {
 	public void setVoteCount(int voteCount) {
 		this.voteCount = voteCount;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Episode [id=" + id + ", name=" + name + ", overview=" + overview + ", runtime=" + runtime
+				+ ", seasonNumber=" + seasonNumber + ", episodeNumber=" + episodeNumber + ", stillPath=" + stillPath
+				+ ", voteAverageApi=" + voteAverageApi + ", voteCount=" + voteCount + ", season=" + season + "]";
+	}
     
     
 }

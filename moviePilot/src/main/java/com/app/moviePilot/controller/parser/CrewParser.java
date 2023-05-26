@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -21,9 +22,10 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
+import com.app.moviePilot.model.mediaPersonnel.CastMember;
 import com.app.moviePilot.model.mediaPersonnel.CrewMember;
 import com.app.moviePilot.model.season.Season;
+import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
  * 
@@ -54,7 +56,7 @@ public class CrewParser extends DataParser{
 		}
 		
 		//creates a list of crewmembers from a crew json
-		public Set<CrewMember> getObjectCast(JsonElement el) {
+		public Set<CrewMember> getObject(JsonElement el) {
 			Set<CrewMember> castList = new HashSet<>();
 			JsonArray crewArray = el.getAsJsonArray();
 			for(JsonElement elem: crewArray) {
@@ -64,19 +66,6 @@ public class CrewParser extends DataParser{
 						obAux.get("job").getAsString()));
 			}
 			return castList;
-		}
-		
-		public CrewMember toObject(JsonElement el) {
-			JsonObject jObj = el.getAsJsonObject();
-			CrewMember crewAux = new CrewMember();
-			JsonElement id = jObj.get("id");
-			JsonElement name = jObj.get("name");
-			JsonElement job = jObj.get("job");
-			if(id!=null) crewAux.setId(id.getAsLong());
-			if(name!=null) crewAux.setName(name.toString());
-			if(job!=null) crewAux.setJob(job.toString());
-			
-			return crewAux;
 		}
 		
 		public <CrewMember> JsonElement toJson(CrewMember object) {
@@ -101,4 +90,11 @@ public class CrewParser extends DataParser{
 
 		    return gson.toJsonTree(object);
 		}
+
+		@Override
+		public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 }

@@ -9,6 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
+import com.app.moviePilot.model.visualContent.VisualContent;
 import com.google.gson.*;
 
 public class PopularActorsParser extends DataParser{
@@ -42,13 +43,19 @@ public class PopularActorsParser extends DataParser{
 	}
 	
 	public List<CastMember> toList(JsonElement el){
-		List<CastMember> popularList = new LinkedList();
+		List<CastMember> popularList = new LinkedList<>();
 		for(JsonElement e: el.getAsJsonObject().get("result").getAsJsonArray()) {
 			JsonObject o = e.getAsJsonObject();
-			popularList.add(new CastMember(o.get("id").getAsLong(), o.get("name").getAsString().replaceAll("\\", ""), o.get("profile_path").toString(), null));
+			popularList.add(new CastMember(o.get("id").getAsLong(), o.get("name").getAsString(), o.get("profile_path").getAsString(), null));
 		}
 		
 		return popularList;
+	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

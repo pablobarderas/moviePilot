@@ -63,6 +63,6 @@ public class testCastParser {
 	
 	@Test
 	void getCastList() {
-		System.out.println(castParser.getObjectCast(castParser.getJson(VALIDURL)));
+		System.out.println(castParser.getObject(castParser.getJson(VALIDURL)));
 	}
 }
