@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.app.moviePilot.controller.register.UserImageManager;
 import com.app.moviePilot.controller.register.RegisterValidator;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
@@ -35,8 +38,6 @@ public class UserController {
 	DeletedUserService deletedUserSer;
 	@Autowired
 	UserSecurity userSec;
-	@Autowired
-	ActiveUserRepository userRepo;
 	
 	@PostMapping(value = "/user/register",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getRegisterData(final @RequestBody UserRegisterDTO userToRegister) {
@@ -75,7 +76,7 @@ public class UserController {
 	}
 
 	@PostMapping("user/update")
-	public ResponseEntity<User> getUserToUpdate(final @RequestBody UserUpdateDTO userToUpdate) {
+	public ResponseEntity<User> getUserToUpdate(@RequestParam("image") final MultipartFile file, final @RequestBody UserUpdateDTO userToUpdate) {
 		UserUpdateDTO validatedFields = (UserUpdateDTO) RegisterValidator.checkRegex(userToUpdate);
 		if (dataToUser.getUser(userToUpdate.getUsername()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -83,6 +84,7 @@ public class UserController {
 		if (validatedFields == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}			
+		if(file!=null) UserImageManager.saveImage(file);
 		User updatedUser = dataToUser.updateUser((UserUpdateDTO) userSec.encryptData(validatedFields));
 		if (updatedUser == null) ResponseEntity.noContent();			
 		return ResponseEntity.ok(updatedUser);
