@@ -18,6 +18,6 @@ public class NetworkController {
 	@GetMapping("/allnetworks")
 	public List<Network> getAllNetworks() {
 		NetworksParser np = new NetworksParser();
-		return np.toList(np.getJson(URL));
+		return np.toList(np.getJson(URL)).subList(0,11);
 	}
 }
