@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -24,6 +25,7 @@ import com.google.gson.JsonSerializer;
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
 import com.app.moviePilot.model.mediaPersonnel.CrewMember;
 import com.app.moviePilot.model.season.Season;
+import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
  * 
@@ -89,26 +91,9 @@ public class CrewParser extends DataParser{
 		    return gson.toJsonTree(object);
 		}
 
-		public Set<CrewMember> getObject(JsonElement el) {
-			Set<CrewMember> crewList = new HashSet<>();
-			JsonArray crewArray = el.getAsJsonArray();
-			try {
-				for(JsonElement elem: crewArray) {
-					JsonObject obAux = elem.getAsJsonObject();
-					CrewMember crewAux = new CrewMember();
-					JsonElement id = obAux.get("id");
-					JsonElement name = obAux.get("name");
-					JsonElement job = obAux.get("job");
-					
-					if(id!=null) crewAux.setId(id.getAsLong());
-					if(name!=null) crewAux.setName(name.getAsString());
-					if(job!=null) crewAux.setJob(job.getAsString());
-					
-					crewList.add(crewAux);
-				}
-			}catch(Exception e) {
-				return crewList;
-			}
-			return crewList;
+		@Override
+		public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.client.Client;
@@ -24,6 +25,7 @@ import com.google.gson.JsonSerializer;
 
 import com.app.moviePilot.model.season.Episode;
 import com.app.moviePilot.model.season.Season;
+import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
  * @author Alberto Johnson
@@ -108,5 +110,11 @@ public class SeasonParser extends DataParser{
 	            .create();
 
 	    return gson.toJsonTree(object);
+	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
