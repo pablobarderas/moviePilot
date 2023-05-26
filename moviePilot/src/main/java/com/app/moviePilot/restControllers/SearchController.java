@@ -1,5 +1,7 @@
 package com.app.moviePilot.restControllers;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +30,18 @@ public class SearchController {
 		
 		FilmParser filmParser = new FilmParser();
 		ShowParser showParser = new ShowParser();
-		//String url = "https://api.themoviedb.org/3/search/movie?api_key=6cacd119a397de0ec8845d760efdb7ab&query="+ keyword;
-		//JsonElement filmResults = filmParser.getJson(url);
-		//JsonElement showResults = filmParser.getJson(url);
+		
 		
 		List<VisualContent> filmsList = filmParser.getVisualContentFromPage("search/movie", "&query="+keyword, page);
-		return  filmsList;
+		List<VisualContent> showList = showParser.getVisualContentFromPage("search/tv", "&query="+keyword, page);
+
+		List<VisualContent> results = new LinkedList<VisualContent>();
+		results.addAll(filmsList);
+		results.addAll(showList);
+
+		Collections.shuffle(results);
+
+		return results;
 	}
 	
 	// GET ALL MOVIES FROM PAGE
@@ -46,7 +54,7 @@ public class SearchController {
 
 	// GET ALL SHOWS FROM PAGE
 	@GetMapping(value = "/tv/{keyword}/page/{page}")
-	public List<VisualContent> getMovieResults(@PathVariable String keyword, @PathVariable int page) {
+	public List<VisualContent> getShowsFromPage(@PathVariable String keyword, @PathVariable int page) {
 		ShowParser showParser = new ShowParser();
 		List<VisualContent> showsList = showParser.getVisualContentFromPage("search/tv", "&query="+keyword, page);
 		return  showsList;
