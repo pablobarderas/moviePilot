@@ -1,5 +1,7 @@
 package com.app.moviePilot.controller.parser;
 
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -13,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
  import com.app.moviePilot.model.season.Episode;
+import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
  * @author Emilio Izquierdo
@@ -98,5 +101,11 @@ public class EpisodeParser extends DataParser{
 		String json = gson.toJson(episode);
 		return json;
 	}//end method
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }//end class
 

@@ -9,6 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import com.app.moviePilot.model.network.Network;
+import com.app.moviePilot.model.visualContent.VisualContent;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -56,6 +57,12 @@ public class NetworksParser extends DataParser{
 		}
 		
 		return networkList;
+	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

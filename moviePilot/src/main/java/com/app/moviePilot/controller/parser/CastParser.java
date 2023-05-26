@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.client.Client;
@@ -23,6 +24,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
+import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
  * @author Alberto Johnson
@@ -96,5 +98,12 @@ public class CastParser extends DataParser{
 
 	    return gson.toJsonTree(object);
 	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

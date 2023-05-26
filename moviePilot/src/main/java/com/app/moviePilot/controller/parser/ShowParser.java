@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.app.moviePilot.model.enums.Genres;
 import com.app.moviePilot.model.network.Network;
 import com.app.moviePilot.model.show.Show;
+import com.app.moviePilot.model.visualContent.VisualContent;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -332,6 +333,12 @@ public class ShowParser extends DataParser {
 
 		return shows;
 	}// end method
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }// end class

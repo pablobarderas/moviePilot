@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.controller.parser.ShowParser;
 import com.app.moviePilot.model.film.Film;
+import com.app.moviePilot.model.visualContent.VisualContent;
 
 /**
  * 
@@ -22,8 +23,8 @@ import com.app.moviePilot.model.film.Film;
 public class SearchController {
 
 	// TODO Multi parse
-	@GetMapping(value = "/multi/{keyword}")
-	public List<Film> getResults(@PathVariable String keyword) {
+	@GetMapping(value = "/multi/{keyword}/page/{page}")
+	public List<VisualContent> getResults(@PathVariable String keyword, @PathVariable int page) {
 		
 		FilmParser filmParser = new FilmParser();
 		ShowParser showParser = new ShowParser();
@@ -31,15 +32,15 @@ public class SearchController {
 		//JsonElement filmResults = filmParser.getJson(url);
 		//JsonElement showResults = filmParser.getJson(url);
 		
-		List<Film> filmsList = filmParser.getFilmsFromPage("search/movie", "&query="+keyword, 1);
+		List<VisualContent> filmsList = filmParser.getVisualContentFromPage("search/movie", "&query="+keyword, page);
 		return  filmsList;
 	}
 	
 	// GET ALL MOVIES FROM PAGE
 	@GetMapping(value = "/movie/{keyword}/page/{page}")
-	public List<Film> getMovieResults(@PathVariable String keyword, @PathVariable int page) {
+	public List<VisualContent> getMovieResults(@PathVariable String keyword, @PathVariable int page) {
 		FilmParser filmParser = new FilmParser();
-		List<Film> filmsList = filmParser.getFilmsFromPage("search/movie", "&query="+keyword, page);
+		List<VisualContent> filmsList = filmParser.getVisualContentFromPage("search/movie", "&query="+keyword, page);
 		return  filmsList;
 	}
 	

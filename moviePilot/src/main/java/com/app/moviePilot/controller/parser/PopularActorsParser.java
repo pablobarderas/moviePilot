@@ -9,6 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
+import com.app.moviePilot.model.visualContent.VisualContent;
 import com.google.gson.*;
 
 public class PopularActorsParser extends DataParser{
@@ -49,6 +50,12 @@ public class PopularActorsParser extends DataParser{
 		}
 		
 		return popularList;
+	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
