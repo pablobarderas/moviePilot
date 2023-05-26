@@ -23,21 +23,24 @@ public class PopularActorsParser extends DataParser{
 	public JsonElement getJson(String url) {
 		Client client = ClientBuilder.newClient();
 		JsonObject newJson = new JsonObject();
+		JsonArray arrayActors = new JsonArray();
 		try {
 			WebTarget service = client.target(url);
 			String jsonResponse = service.request(MediaType.APPLICATION_JSON).get(String.class);
 			if(!this.isCorrectFormat(JsonParser.parseString(jsonResponse))) return null;
-			JsonArray arrayActors = new JsonArray();
 			for(JsonElement o: JsonParser.parseString(jsonResponse).getAsJsonObject().get("results").getAsJsonArray()) {
 				JsonObject actorAux = new JsonObject();
-				actorAux.addProperty("id", o.getAsJsonObject().get("id").toString());
-				actorAux.addProperty("name", o.getAsJsonObject().get("name").toString());
-				actorAux.addProperty("profile_path", o.getAsJsonObject().get("profile_path").toString());
+				actorAux.addProperty("id", o.getAsJsonObject().get("id").getAsString());
+				actorAux.addProperty("name", o.getAsJsonObject().get("name").getAsString());
+				JsonElement pathAux = o.getAsJsonObject().get("profile_path");
+				if(pathAux!=null) actorAux.addProperty("profile_path", pathAux.getAsString());
+				else actorAux.addProperty("profile_path", "");
 				arrayActors.add(actorAux);
 			}
 			newJson.add("result", arrayActors);
 		}catch(Exception e) {
-			return null;
+			newJson.add("result", arrayActors);
+			return newJson;
 		}
 		return newJson;
 	}
