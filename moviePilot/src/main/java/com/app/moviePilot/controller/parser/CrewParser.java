@@ -56,7 +56,7 @@ public class CrewParser extends DataParser{
 		}
 		
 		//creates a list of crewmembers from a crew json
-		public Set<CrewMember> getObjectCast(JsonElement el) {
+		public Set<CrewMember> getObject(JsonElement el) {
 			Set<CrewMember> castList = new HashSet<>();
 			JsonArray crewArray = el.getAsJsonArray();
 			for(JsonElement elem: crewArray) {
@@ -96,4 +96,5 @@ public class CrewParser extends DataParser{
 			// TODO Auto-generated method stub
 			return null;
 		}
+
 }
