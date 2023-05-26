@@ -332,6 +332,25 @@ public class ShowParser extends DataParser {
 
 		return shows;
 	}// end method
+
+	// GET LIST OF Shows BY PAGE NUMBER
+	public List<Show> getShowsFromPage(String endPoints, String params, int page) {
+		List<Show> shows = new ArrayList<>();
+		Client client = ClientBuilder.newClient();
+		String url = super.getUrl() + endPoints + super.getApikey() + params + "&page=" + page;
+		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
+		String json = response.readEntity(String.class);
+		JsonObject pageObject = JsonParser.parseString(json).getAsJsonObject();
+		JsonArray array = pageObject.getAsJsonArray("results");
+		
+		for (JsonElement showData : array) {
+			JsonObject showObject = showData.getAsJsonObject();
+			shows.add(fetchShow(showObject));
+		}
+		
+		return shows;
+	}// end method
+
 	
 
 }// end class
