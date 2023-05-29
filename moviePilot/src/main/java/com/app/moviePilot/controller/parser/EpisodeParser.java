@@ -74,6 +74,7 @@ public class EpisodeParser extends DataParser{
 				JsonElement voteAverageApi = jsonEpisode.get("vote_average");
 				JsonElement voteCount = jsonEpisode.get("vote_count");
 				JsonElement id = jsonEpisode.get("id");
+				JsonElement cast = jsonEpisode.get("cast");
 				if(name!=null) episodeAux.setName(name.getAsString());
 				if(overview!=null) episodeAux.setOverview(overview.getAsString());
 				if(runtime!=null) episodeAux.setRuntime(runtime.getAsInt());
@@ -83,6 +84,7 @@ public class EpisodeParser extends DataParser{
 				if(voteAverageApi!=null) episodeAux.setVoteAverageApi(voteAverageApi.getAsDouble());
 				if(voteCount!=null) episodeAux.setVoteCount(voteCount.getAsInt());
 				if(id!=null) episodeAux.setId(id.getAsLong());
+				
 			}
 		} catch (Exception e) {
 			return episodeAux;

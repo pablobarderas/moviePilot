@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @author Emilio Izquierdo
  *
  */
-public class Episode {
+public class Episode implements Comparable<Episode>{
 
     private Long id;
     
@@ -114,6 +114,11 @@ public class Episode {
 		return "Episode [id=" + id + ", name=" + name + ", overview=" + overview + ", runtime=" + runtime
 				+ ", seasonNumber=" + seasonNumber + ", episodeNumber=" + episodeNumber + ", stillPath=" + stillPath
 				+ ", voteAverageApi=" + voteAverageApi + ", voteCount=" + voteCount + ", season=" + season + "]";
+	}
+
+	@Override
+	public int compareTo(Episode o) {
+		return Integer.compare(this.episodeNumber, o.getEpisodeNumber());
 	}
     
     
