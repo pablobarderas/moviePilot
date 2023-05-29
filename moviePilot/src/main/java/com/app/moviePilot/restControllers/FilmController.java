@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
  *
  */
 @RestController
+@CrossOrigin(value = "*")
 @RequestMapping(value = "/movies")
 public class FilmController {
 

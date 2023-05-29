@@ -1,36 +1,23 @@
 package com.app.moviePilot.restControllers;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.moviePilot.controller.filter.FilterProcessor;
 import com.app.moviePilot.controller.parser.FilmParser;
 import com.app.moviePilot.controller.parser.GenresParser;
 import com.app.moviePilot.controller.parser.ShowParser;
 import com.app.moviePilot.model.enums.Genres;
-import com.app.moviePilot.model.film.Film;
-import com.app.moviePilot.model.show.Show;
 import com.app.moviePilot.model.visualContent.VisualContent;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 /**
  * 
@@ -39,6 +26,7 @@ import com.google.gson.JsonParser;
  */
 
 @RestController
+@CrossOrigin(value = "*")
 @RequestMapping(value = "/genres")
 public class GenresController {
 

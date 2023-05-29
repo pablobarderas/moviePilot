@@ -21,6 +21,7 @@ import com.app.moviePilot.model.visualContent.VisualContent;
  */
 
 @RestController
+@CrossOrigin(value = "*")
 @RequestMapping(value = "/search")
 public class SearchController {
 
