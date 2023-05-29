@@ -10,7 +10,6 @@ import com.app.moviePilot.controller.parser.NetworksParser;
 import com.app.moviePilot.model.network.Network;
 import com.google.gson.JsonElement;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class NetworkController {
 	

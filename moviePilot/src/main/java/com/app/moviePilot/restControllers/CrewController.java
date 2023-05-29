@@ -15,7 +15,7 @@ import com.app.moviePilot.model.mediaPersonnel.CrewMember;
  * @author Alberto Jhonson
  *
  */
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 public class CrewController {
 	

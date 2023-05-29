@@ -17,7 +17,6 @@ import com.app.moviePilot.model.show.Show;
  * @author Arismendy Castillo
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/shows")
 public class ShowController {
 

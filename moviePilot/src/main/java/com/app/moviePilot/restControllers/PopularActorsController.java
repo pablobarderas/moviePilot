@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.moviePilot.model.mediaPersonnel.CastMember;
 import com.app.moviePilot.controller.parser.PopularActorsParser;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class PopularActorsController {
 	
