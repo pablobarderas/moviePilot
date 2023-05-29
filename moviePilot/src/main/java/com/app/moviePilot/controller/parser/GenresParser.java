@@ -25,8 +25,7 @@ public class GenresParser extends DataParser {
 
 	@Override
 	public boolean isCorrectFormat(JsonElement object) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -36,9 +35,9 @@ public class GenresParser extends DataParser {
 		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
 		String json = response.readEntity(String.class);
 		JsonObject genresJson = JsonParser.parseString(json).getAsJsonObject();
-		JsonArray genresArray = genresJson.getAsJsonArray("genres");
+		//JsonArray genresArray = genresJson.getAsJsonArray("genres");
 
-		return genresArray;
+		return genresJson;
 	}
 
 	// CONVERT JSON TO FILM OBJECT
@@ -48,16 +47,13 @@ public class GenresParser extends DataParser {
 
 		try {
 
-
-				// SET ATTRIBUTES
-				if (genreJson.getAsJsonObject().get("id") != null) {
-					genre.setId(genreJson.getAsJsonObject().get("id").getAsLong());
-				}
-				if (genreJson.getAsJsonObject().get("name") != null) {
-					genre.setName(genreJson.getAsJsonObject().get("name").getAsString());
-				}
-				
-
+			// SET ATTRIBUTES
+			if (genreJson.getAsJsonObject().get("id") != null) {
+				genre.setId(genreJson.getAsJsonObject().get("id").getAsLong());
+			}
+			if (genreJson.getAsJsonObject().get("name") != null) {
+				genre.setName(genreJson.getAsJsonObject().get("name").getAsString());
+			}
 
 		} catch (Exception e) {
 			return genre;

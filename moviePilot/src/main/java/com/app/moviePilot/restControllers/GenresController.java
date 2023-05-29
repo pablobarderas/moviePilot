@@ -1,6 +1,8 @@
 package com.app.moviePilot.restControllers;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +42,7 @@ import com.google.gson.JsonParser;
 @RequestMapping(value = "/genres")
 public class GenresController {
 
-	@GetMapping(value = "/genres")
+	@GetMapping(value = "/allGenres")
 	public ResponseEntity<Set<Genres>> getGenres() {
 		
 		// /genre/movie/list
@@ -49,11 +51,11 @@ public class GenresController {
 		
 		Set<Genres> genresList = genresParser.getGenresList(genresParser.getJson(url));
 		//return genresArray;
-		return new ResponseEntity<>(genresList, HttpStatus.OK) ;
+		return new ResponseEntity<>(genresList, HttpStatus.OK);
 	}
 	
 	
-	@GetMapping(value = "/{genreId}/page/{page}")
+	@GetMapping(value = "/genre/{genreId}/page/{page}")
 	public List<VisualContent> getGenres(@PathVariable String genreId, @PathVariable int page) {
 
 		FilmParser filmParser = new FilmParser();
@@ -63,8 +65,14 @@ public class GenresController {
 		List<VisualContent> showsList = showParser.getVisualContentFromPage("discover/movie", "&with_genres="+genreId, page);
 		//List<Show> showList = showParser.getAllShows(url, page);
 		
+		List<VisualContent> results = new LinkedList<VisualContent>();
+		results.addAll(filmsList);
+		results.addAll(showsList);
 
-		return null;
+		Collections.shuffle(results);
+
+		return results;
+		
 	}
 
 }
