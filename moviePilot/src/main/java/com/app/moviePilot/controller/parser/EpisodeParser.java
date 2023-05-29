@@ -1,5 +1,7 @@
 package com.app.moviePilot.controller.parser;
 
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -13,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
  import com.app.moviePilot.model.season.Episode;
+import com.app.moviePilot.model.visualContent.VisualContent;
 /**
  * 
  * @author Emilio Izquierdo
@@ -56,6 +59,8 @@ public class EpisodeParser extends DataParser{
 	 * @return an episode object with the info from the json
 	 */
 	public Episode getObject(JsonElement o) {
+		Episode episodeAux = new Episode();
+
 		try {
 			if(isCorrectFormat(o)) {
 				JsonObject jsonEpisode = o.getAsJsonObject();
@@ -68,23 +73,21 @@ public class EpisodeParser extends DataParser{
 				JsonElement stillPath = jsonEpisode.get("still_path");
 				JsonElement voteAverageApi = jsonEpisode.get("vote_average");
 				JsonElement voteCount = jsonEpisode.get("vote_count");
-				Episode episodeAux = new Episode();
-				if(name!=null) episodeAux.setName(name.toString());
+				JsonElement id = jsonEpisode.get("id");
+				if(name!=null) episodeAux.setName(name.getAsString());
 				if(overview!=null) episodeAux.setOverview(overview.getAsString());
 				if(runtime!=null) episodeAux.setRuntime(runtime.getAsInt());
 				if(seasonNumber!=null) episodeAux.setSeasonNumber(seasonNumber.getAsInt());
 				if(episodeNumber!=null) episodeAux.setEpisodeNumber(episodeNumber.getAsInt());
-				if(stillPath!=null) episodeAux.setStillPath(stillPath.toString());
+				if(stillPath!=null) episodeAux.setStillPath(stillPath.getAsString());
 				if(voteAverageApi!=null) episodeAux.setVoteAverageApi(voteAverageApi.getAsDouble());
 				if(voteCount!=null) episodeAux.setVoteCount(voteCount.getAsInt());
-
-				return episodeAux;
+				if(id!=null) episodeAux.setId(id.getAsLong());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new Episode();
+			return episodeAux;
 		}
-		return null;
+		return episodeAux;
 	}//end method
 	
 	/**
@@ -98,5 +101,11 @@ public class EpisodeParser extends DataParser{
 		String json = gson.toJson(episode);
 		return json;
 	}//end method
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }//end class
 

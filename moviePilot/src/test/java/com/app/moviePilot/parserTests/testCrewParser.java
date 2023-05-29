@@ -68,7 +68,7 @@ public class testCrewParser {
 	
 	@Test
 	void getCastList() {
-		Set<CrewMember> crewList = crewParser.getObjectCast(crewParser.getJson(VALIDURL));
+		Set<CrewMember> crewList = crewParser.getObject(crewParser.getJson(VALIDURL));
 		int i= 0;
 		Iterator<CrewMember> it = crewList.iterator();
 		assertEquals(it.next().getId(), 2163616);

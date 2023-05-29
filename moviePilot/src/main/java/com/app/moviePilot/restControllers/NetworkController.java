@@ -2,6 +2,7 @@ package com.app.moviePilot.restControllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,6 @@ public class NetworkController {
 	@GetMapping("/allnetworks")
 	public List<Network> getAllNetworks() {
 		NetworksParser np = new NetworksParser();
-		return np.toList(np.getJson(URL));
+		return np.toList(np.getJson(URL)).subList(0,11);
 	}
 }

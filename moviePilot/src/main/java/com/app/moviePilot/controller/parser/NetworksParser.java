@@ -9,6 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import com.app.moviePilot.model.network.Network;
+import com.app.moviePilot.model.visualContent.VisualContent;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -36,9 +37,9 @@ public class NetworksParser extends DataParser{
 			JsonArray arrayNetworks = new JsonArray();
 			for(JsonElement o: JsonParser.parseString(jsonResponse).getAsJsonObject().get("results").getAsJsonArray()) {
 				JsonObject networkAux = new JsonObject();
-				networkAux.addProperty("id", o.getAsJsonObject().get("provider_id").toString());
-				networkAux.addProperty("name", o.getAsJsonObject().get("provider_name").toString());
-				networkAux.addProperty("logoPath", o.getAsJsonObject().get("logo_path").toString());
+				networkAux.addProperty("id", o.getAsJsonObject().get("provider_id").getAsString());
+				networkAux.addProperty("name", o.getAsJsonObject().get("provider_name").getAsString());
+				networkAux.addProperty("logoPath", o.getAsJsonObject().get("logo_path").getAsString());
 				arrayNetworks.add(networkAux);
 			}
 			newJson.add("result", arrayNetworks);
@@ -56,6 +57,12 @@ public class NetworksParser extends DataParser{
 		}
 		
 		return networkList;
+	}
+
+	@Override
+	public List<VisualContent> getVisualContentFromPage(String endPoints, String params, int page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
