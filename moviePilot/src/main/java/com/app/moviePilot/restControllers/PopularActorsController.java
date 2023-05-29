@@ -17,7 +17,9 @@ public class PopularActorsController {
 	@GetMapping("/popularactors")
 	public List<CastMember> getPopularActors() {
 		PopularActorsParser pp = new PopularActorsParser();
-		return pp.toList(pp.getJson(URL)).subList(0, 9);
+		List<CastMember> lista = pp.toList(pp.getJson(URL));
+		if(lista.size()>9) return lista.subList(0, 9);
+		return lista;
 	}
 
 }

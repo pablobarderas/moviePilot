@@ -23,7 +23,7 @@ public class Genres {
 	@Id
 	@Column(name="genre_id")
 	private long id;
-	@ManyToMany(mappedBy = "user_genres")
+	@ManyToMany(mappedBy = "favoriteGenres")
 	Set<User> favoriteByUser;
 	public Genres() {}
 	
