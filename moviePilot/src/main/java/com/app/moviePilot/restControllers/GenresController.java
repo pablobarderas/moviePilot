@@ -71,7 +71,7 @@ public class GenresController {
 		ShowParser showParser = new ShowParser();
 		
 		List<VisualContent> filmsList = filmParser.getVisualContentFromPage("discover/movie", "&with_genres="+genreId, page);
-		List<VisualContent> showsList = showParser.getVisualContentFromPage("discover/movie", "&with_genres="+genreId, page);
+		List<VisualContent> showsList = showParser.getVisualContentFromPage("discover/tv", "&with_genres="+genreId, page);
 		//List<Show> showList = showParser.getAllShows(url, page);
 		
 		List<VisualContent> results = new LinkedList<VisualContent>();
