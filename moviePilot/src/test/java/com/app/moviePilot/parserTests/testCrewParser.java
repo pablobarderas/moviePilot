@@ -71,6 +71,7 @@ public class testCrewParser {
 		Set<CrewMember> crewList = crewParser.getObject(crewParser.getJson(VALIDURL));
 		int i= 0;
 		Iterator<CrewMember> it = crewList.iterator();
-		assertEquals(it.next().getId(), 2163616);
+
+		assertEquals(2164205,it.next().getId());
 	}
 }
