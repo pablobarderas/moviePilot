@@ -171,12 +171,29 @@ public class FilmParser extends DataParser {
 
 	}
 
-	
 	// GET LIST OF FILMS BY PAGE NUMBER
 	public List<Film> getFilmsFromPage(String params, int page) {
 		List<Film> films = new ArrayList<>();
 		Client client = ClientBuilder.newClient();
 		String url = super.getUrl() + params + super.getApikey() + "&page=" + page;
+		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
+		String json = response.readEntity(String.class);
+		JsonObject pageObject = JsonParser.parseString(json).getAsJsonObject();
+		JsonArray array = pageObject.getAsJsonArray("results");
+
+		for (JsonElement showData : array) {
+			JsonObject showObject = showData.getAsJsonObject();
+			films.add(getObject(showObject));
+		}
+
+		return films;
+	}// end method
+
+	// GET LIST OF FILMS BY URL AND PAGE NUMBER
+	public List<Film> getFilmsFromPageByUrl(String initialUrl, int page) {
+		List<Film> films = new ArrayList<>();
+		Client client = ClientBuilder.newClient();
+		String url = initialUrl + "&page=" + page;
 		Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
 		String json = response.readEntity(String.class);
 		JsonObject pageObject = JsonParser.parseString(json).getAsJsonObject();
