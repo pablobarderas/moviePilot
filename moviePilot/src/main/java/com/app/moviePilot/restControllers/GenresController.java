@@ -43,15 +43,24 @@ import com.google.gson.JsonParser;
 public class GenresController {
 
 	@GetMapping(value = "/allGenres")
-	public ResponseEntity<Set<Genres>> getGenres() {
+	public ResponseEntity<List<Genres>> getGenres() {
 		
 		// /genre/movie/list
 		GenresParser genresParser = new GenresParser();
-		String url = "https://api.themoviedb.org/3/genre/movie/list?api_key=6cacd119a397de0ec8845d760efdb7ab";
+		String urlFilms = "https://api.themoviedb.org/3/genre/movie/list?api_key=6cacd119a397de0ec8845d760efdb7ab";
+		String urlShows = "https://api.themoviedb.org/3/genre/tv/list?api_key=6cacd119a397de0ec8845d760efdb7ab";
 		
-		Set<Genres> genresList = genresParser.getGenresList(genresParser.getJson(url));
+		Set<Genres> genresFilmList = genresParser.getGenresList(genresParser.getJson(urlFilms));
+		Set<Genres> genresShowList = genresParser.getGenresList(genresParser.getJson(urlShows));
+		
+		List<Genres> results = new LinkedList<Genres>();
+		results.addAll(genresFilmList);
+		results.addAll(genresShowList);
+
+		Collections.shuffle(results);
+		
 		//return genresArray;
-		return new ResponseEntity<>(genresList, HttpStatus.OK);
+		return new ResponseEntity<>(results, HttpStatus.OK);
 	}
 	
 	
