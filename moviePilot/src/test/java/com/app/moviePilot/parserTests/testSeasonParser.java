@@ -53,7 +53,7 @@ public class testSeasonParser {
 	void testGetCorrectJson() {
 		String jsonString = "{\"_id\":\"52532e2119c2957940000047\"";
 //		String json = new SeasonParser().getJson(VALIDURL).getAsJsonObject().toString();
-		System.out.println(sp.getJson(VALIDURL).getAsJsonObject().get("episodes").getAsJsonArray().get(0));
+		System.out.println(sp.getObject(sp.getJson(VALIDURL)));
 //		assertTrue(json.startsWith(jsonString));
 	}
 	
