@@ -17,7 +17,6 @@ import com.app.moviePilot.model.mediaPersonnel.CastMember;
  *
  */
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class CastController {
 	
