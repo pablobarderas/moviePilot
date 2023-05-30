@@ -59,7 +59,7 @@ public abstract class User {
 	private Set<Genres> favoriteGenres;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-	  name = "user_lits", 
+	  name = "user_lists", 
 	  joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "content_id"))
 	private Set<VisualContent> userVisualContent;
