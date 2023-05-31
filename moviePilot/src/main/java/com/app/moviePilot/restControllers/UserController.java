@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ import com.app.moviePilot.model.user.ActiveUser;
 import com.app.moviePilot.model.user.User;
 import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.repository.ActiveUserRepository;
+import com.app.moviePilot.security.JwtUtils;
 import com.app.moviePilot.security.UserSecurity;
 import com.app.moviePilot.services.DeletedUserService;
 import com.app.moviePilot.services.UserService;
@@ -122,5 +124,25 @@ public class UserController {
 		}
 		User updatedUser = dataToUser.makeUserAdmin(normalUser);
 		return ResponseEntity.ok(updatedUser);
+	}
+	
+	@PostMapping(value = "/user/registerJwt",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> test(final @RequestBody UserRegisterDTO userToRegister) {
+		ActiveUser u = new ActiveUser();
+		u.setUsername(userToRegister.getUsername());
+		u.setPassword(userToRegister.getPassword());
+		u.setEmail(userToRegister.getEmail());
+		
+		return ResponseEntity.ok(JwtUtils.generateToken(u));
+	}
+	@PostMapping(value = "/user/loginJwt",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String testLogin(@RequestHeader("Authorization") String authorizationHeader,final @RequestBody UserRegisterDTO userToRegister) {
+		 String token = authorizationHeader.replace("Bearer ", "");
+	        boolean isValidToken = JwtUtils.verifyAndExtractData(token);
+	        if (isValidToken) {
+	            return "Token válido";
+	        } else {
+	            return "Token inválido";
+	        }
 	}
 }
