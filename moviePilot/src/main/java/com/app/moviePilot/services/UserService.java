@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
+import com.app.moviePilot.controller.register.AlphabeticStringGenerator;
 import com.app.moviePilot.model.register.UserRegisterDTO;
 import com.app.moviePilot.model.register.UserUpdateDTO;
 import com.app.moviePilot.model.user.ActiveUser;
@@ -30,11 +31,14 @@ public class UserService {
 
 	}
 	public ActiveUser registerDataToUser(UserRegisterDTO userToSave) {
+		int verificationCodeLength = 64;
 		ActiveUser user = new ActiveUser();
 		user.setEmail(userToSave.getEmail());
 		user.setUserName(userToSave.getUsername());
 		user.setPassword(userToSave.getPassword());
 		user.setCreatedAt(LocalDateTime.now());
+		user.setVerificationCode(AlphabeticStringGenerator.create(verificationCodeLength));
+		user.setEnabled(false);		
 		return userRepository.save(user);
 	}
 	public ActiveUser getUser(String username) {

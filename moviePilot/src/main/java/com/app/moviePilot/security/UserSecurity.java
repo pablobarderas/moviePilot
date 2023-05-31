@@ -28,7 +28,6 @@ import com.app.moviePilot.model.register.UserRegisterDTO;
 public class UserSecurity {
 	
 	public UserRegisterDTO encryptData(UserRegisterDTO d) {
-		d.setEmail(stringToEncrypted(d.getEmail(), d.getUsername()));
 		d.setPassword(stringToEncrypted(d.getPassword(), d.getUsername()));
 		return d;
 	}

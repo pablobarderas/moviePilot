@@ -29,6 +29,7 @@ import javax.persistence.JoinColumn;
 
 import com.app.moviePilot.model.comment.Comment;
 import com.app.moviePilot.model.enums.Genres;
+import com.app.moviePilot.model.user.friendRequest.FriendRequest;
 import com.app.moviePilot.model.user.roles.Role;
 import com.app.moviePilot.model.visualContent.VisualContent;
 /**
@@ -77,6 +78,48 @@ public abstract class User {
 	@Column(name = "role", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'NORMAL_USER'")
 	@Enumerated(EnumType.STRING)
 	private Role role = Role.NORMAL_USER;
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+    @Column(name="verified") 
+    private boolean enabled;
+    
+    @OneToMany(mappedBy = "sender")
+    private Set<FriendRequest> sentFriendRequests;
+
+    @OneToMany(mappedBy = "receiver")
+    private Set<FriendRequest> receivedFriendRequests;
+    
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public Set<FriendRequest> getSentFriendRequests() {
+		return sentFriendRequests;
+	}
+	public void setSentFriendRequests(Set<FriendRequest> sentFriendRequests) {
+		this.sentFriendRequests = sentFriendRequests;
+	}
+	public Set<FriendRequest> getReceivedFriendRequests() {
+		return receivedFriendRequests;
+	}
+	public void setReceivedFriendRequests(Set<FriendRequest> receivedFriendRequests) {
+		this.receivedFriendRequests = receivedFriendRequests;
+	}
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	public Role getRole() {
 		return role;
 	}

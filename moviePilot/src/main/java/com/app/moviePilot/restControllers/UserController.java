@@ -4,6 +4,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import java.lang.reflect.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,7 +59,8 @@ public class UserController {
 	UserSecurity userSec;
 	
 	@PostMapping(value = "/user/register",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> getRegisterData(final @RequestBody UserRegisterDTO userToRegister) {
+	public ResponseEntity<User> getRegisterData(final HttpServletRequest request,final @RequestBody UserRegisterDTO userToRegister) {
+		String origin = request.getHeader("Origin");
 		UserRegisterDTO validatedFields = RegisterValidator.checkRegex(userToRegister);
 		if (dataToUser.getUser(userToRegister.getUsername()) != null 
 			||	deletedUserSer.getDeletedUser(userToRegister.getUsername())!=null) {
@@ -64,7 +70,8 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}			
 		User registeredUser = dataToUser.registerDataToUser(userSec.encryptData(validatedFields));
-		if (registeredUser == null) ResponseEntity.noContent();			
+		if (registeredUser == null) ResponseEntity.noContent();	
+		
 		return ResponseEntity.ok(registeredUser);
 	}
 
