@@ -38,6 +38,18 @@ public class KeyStorer {
 	            return false;
 	        }
 	    }
+	public static String getEncryptedSecretFromProperties(String username) {
+		  Properties properties = new Properties();
+	        Path filePath = Path.of(FILE_PATH, FILE_NAME);
+	        try {	
+	        	InputStream inputStream = Files.newInputStream(filePath, StandardOpenOption.READ);
+	            properties.load(inputStream);
+	            return properties.getProperty(username);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		return null;
+	}
 	 
 	 /**
 	  * This functions should be added to the code when the product gets into a commercial state

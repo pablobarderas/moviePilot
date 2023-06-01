@@ -14,5 +14,5 @@ import com.app.moviePilot.model.user.ActiveUser;
 public interface ActiveUserRepository extends JpaRepository<ActiveUser, Long> {
 
 	ActiveUser findByUsername(String username);
-
+	ActiveUser findByUsernameAndPassword(String username, String password);
 }

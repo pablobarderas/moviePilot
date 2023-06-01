@@ -23,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Component;
 
 import com.app.moviePilot.model.register.UserRegisterDTO;
+import com.app.moviePilot.model.user.ActiveUser;
 
 @Component
 public class UserSecurity {
@@ -69,5 +70,24 @@ public class UserSecurity {
 		}
 		return null;
 	}
+	
+	public String decryptString(final ActiveUser u) {
+	    try {
+	        SecretKey secret = generateSecret(u.getUsername());
+	        String ivString = KeyStorer.getEncryptedSecretFromProperties(u.getUsername());
+	        byte[] iv = Base64.getDecoder().decode(ivString);
+	        GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(128, iv);
+
+	        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            cipher.init(Cipher.ENCRYPT_MODE, secret, gcmParameterSpec);
+            byte[] encryptedData = cipher.doFinal(u.getPassword().getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(encryptedData);
+	    } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
+	            IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
 	
 }

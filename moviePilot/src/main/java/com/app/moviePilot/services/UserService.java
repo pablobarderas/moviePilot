@@ -63,4 +63,7 @@ public class UserService {
 		u.setRole(Role.ADMIN);
 		return userRepository.save(u);
 	}
+	public ActiveUser checkLogin(ActiveUser u) {
+		return userRepository.findByUsernameAndPassword(u.getUsername(), u.getPassword());
+	}
 }

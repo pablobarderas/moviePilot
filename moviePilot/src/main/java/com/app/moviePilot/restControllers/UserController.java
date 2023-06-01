@@ -60,8 +60,14 @@ public class UserController {
 	@Autowired
 	UserSecurity userSec;
 	
+	/**
+	 * 
+	 * @param request, the header of the HTTP request
+	 * @param userToRegister
+	 * @return a JWT as a String
+	 */
 	@PostMapping(value = "/user/register",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> getRegisterData(final HttpServletRequest request,final @RequestBody UserRegisterDTO userToRegister) {
+	public ResponseEntity<String> getRegisterData(final HttpServletRequest request,final @RequestBody UserRegisterDTO userToRegister) {
 		String origin = request.getHeader("Origin");
 		UserRegisterDTO validatedFields = RegisterValidator.checkRegex(userToRegister);
 		if (dataToUser.getUser(userToRegister.getUsername()) != null 
@@ -71,12 +77,29 @@ public class UserController {
 		if (validatedFields == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}			
-		User registeredUser = dataToUser.registerDataToUser(userSec.encryptData(validatedFields));
+		ActiveUser registeredUser = dataToUser.registerDataToUser(userSec.encryptData(validatedFields));
 		if (registeredUser == null) ResponseEntity.noContent();	
-		
-		return ResponseEntity.ok(registeredUser);
+		return ResponseEntity.ok(JwtUtils.generateToken(registeredUser));
 	}
-
+	/**
+	 * 
+	 * @param authorizationHeader
+	 * @param username
+	 * @param password
+	 * @return JWT as String
+	 */
+	@PostMapping(value = "/user/login",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> login(final @RequestParam("username") String username,
+			final @RequestParam("password") String password) {
+			ActiveUser u = new ActiveUser();
+			u.setUsername(username);
+			u.setPassword(password);
+			u.setPassword(userSec.decryptString(u));
+			ActiveUser loggedUser = dataToUser.checkLogin(u);
+			if (loggedUser == null) return ResponseEntity.badRequest().body(null);
+			return ResponseEntity.ok(JwtUtils.generateToken(loggedUser));
+	}
+	
 	@DeleteMapping("/delete/{username}")
 	public ResponseEntity<User> deleteUser(@PathVariable String username) {
 		ActiveUser userToDelete = dataToUser.getUser(username);

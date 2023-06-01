@@ -30,9 +30,9 @@ public abstract class JwtUtils {
 	public static String generateToken(final ActiveUser u) {
 	    Date now = new Date();
 	    Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME);
-	    return Jwts.builder()
-	            .setSubject(u.getUsername())
+	    return Jwts.builder()	            
 	            .setClaims(generateClaims(u))
+	            .setSubject(u.getUsername())
 	            .setIssuedAt(now)
 	            .setExpiration(expirationDate)
 	            .signWith(Keys.hmacShaKeyFor(getSecretKey().getBytes()))
@@ -42,7 +42,6 @@ public abstract class JwtUtils {
 
 	private static Claims generateClaims(final ActiveUser u) {
 	    Claims userClaims = Jwts.claims();
-	    userClaims.put("username", u.getUsername());
 	    userClaims.put("email", u.getEmail());
 	    return userClaims;
 	}
@@ -53,7 +52,7 @@ public abstract class JwtUtils {
 	        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(getSecretKey().getBytes()))
 	                .build().parseClaimsJws(token);
 	        Claims claims = claimsJws.getBody();
-	        String username = claims.get("username").toString();
+	        String username = claims.getIssuer();
 	        if(claims.getExpiration().after(new Date())) {
 	        	return true;
 	        }
